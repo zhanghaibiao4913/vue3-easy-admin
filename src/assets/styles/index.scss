@@ -1,0 +1,71 @@
+@for $size from 0 through 100 {
+  .p#{$size} { padding: $size + px; }
+  .pt#{$size} { padding-top: $size + px; }
+  .pb#{$size} { padding-bottom: $size + px; }
+  .pl#{$size} { padding-left: $size + px; }
+  .pr#{$size} { padding-right: $size + px; }
+  .ptb#{$size} { padding-top: $size + px; padding-bottom: $size + px; }
+  .plr#{$size} { padding-left: $size + px; padding-right: $size + px; }
+  .m#{$size} { margin: $size + px; }
+  .mt#{$size} { margin-top: $size + px; }
+  .mb#{$size} { margin-bottom: $size + px; }
+  .ml#{$size} { margin-left: $size + px; }
+  .mr#{$size} { margin-right: $size + px; }
+  .mtb#{$size} { margin-top: $size + px; margin-bottom: $size + px; }
+  .mlr#{$size} { margin-left: $size + px; margin-right: $size + px; }
+}
+
+@for $size from 12 through 50 {
+  .fs#{$size} { font-size: $size + px; }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@for $size from 1 through 24 {
+  .flex-#{$size} { flex: $size; }
+}
+
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.y-scroll {
+  overflow-y: auto;
+}
+
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.full {
+  width: 100%;
+  height: 100%;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
