@@ -1,18 +1,13 @@
 <template>
   <div class="tag-bar-container">
     <div class="tabs-container">
-      <el-tabs
-        v-model="currentTagName"
-        type="card"
-        @tab-remove="removeTab"
-        @tab-click="tabClick"
-      >
+      <el-tabs v-model="currentTagName" type="card" @tab-remove="removeTab" @tab-click="tabClick">
         <el-tab-pane
           v-for="item in visitedViews"
           :key="item.path"
-          :label="item.meta?.title || 'New Tabs'"
-          :name="item.name"
-          :closable="!item.meta.affix"
+          :label="`${item.meta?.title || 'New Tabs'}`"
+          :name="String(item.name)"
+          :closable="!item.meta?.affix"
         />
       </el-tabs>
     </div>
@@ -20,17 +15,18 @@
       trigger="click"
       placement="bottom-end"
       @command="handleCommand"
-      style="flex: 0 0 80px;"
+      style="flex: 0 0 80px"
       class="align-center pr10"
     >
       <span class="el-dropdown-link">
-        操作<el-icon class="el-icon--right"><arrow-down /></el-icon>
+        操作
+        <el-icon class="el-icon--right"><arrow-down /></el-icon>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item :icon="CloseBold" command="closeOther">关闭其他</el-dropdown-item>
-          <el-dropdown-item :icon="CircleCloseFilled" command="closeAll">关闭所有</el-dropdown-item>
-          <el-dropdown-item :icon="Refresh" command="refresh">刷新当前</el-dropdown-item>
+          <el-dropdown-item icon="CloseBold" command="closeOther">关闭其他</el-dropdown-item>
+          <el-dropdown-item icon="CircleCloseFilled" command="closeAll">关闭所有</el-dropdown-item>
+          <el-dropdown-item icon="Refresh" command="refresh">刷新当前</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -49,26 +45,24 @@ const route = useRoute()
 const tabsStore = useTabsStore()
 const userStore = useUserStore()
 const currentTagName = ref('')
-const visitedViews = computed(() => tabsStore.tabList)
+const visitedViews = computed<RouteLocationNormalized[]>(() => tabsStore.tabList)
 const appMenuList = computed(() => userStore.appMenuList)
 
-watch(() => route.path, () => {
-  tabsStore.addTab(route)
-  currentTagName.value = route.name as string
-}, { immediate: true, deep: true })
-
-onMounted(() => {
-  initTabs(appMenuList.value)
-})
+watch(
+  () => route.path,
+  () => {
+    tabsStore.addTab(route)
+    currentTagName.value = route.name as string
+  },
+  { immediate: true, deep: true }
+)
 
 const initTabs = (menu: RouteRecordRaw[]) => {
   menu.forEach((item: RouteRecordRaw) => {
     if (item.children) {
       initTabs(item.children)
-    } else {
-      if (item.meta?.affix) {
-        tabsStore.addTab(item)
-      }
+    } else if (item.meta?.affix) {
+      tabsStore.addTab(item)
     }
   })
 }
@@ -86,7 +80,7 @@ const removeTab = (name: string) => {
 
 const tabClick = (tag: any) => {
   // console.log('tabClick', tag.paneName)
-  const paneName: string = tag.paneName
+  const { paneName } = tag
   if (paneName === route.name) return
   const i = visitedViews.value.findIndex((e: any) => e.name === paneName)
   if (i > -1) {
@@ -131,6 +125,10 @@ const handleCommand = (command: string) => {
     refresh()
   }
 }
+
+onMounted(() => {
+  initTabs(appMenuList.value)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -163,7 +161,7 @@ const handleCommand = (command: string) => {
   align-items: center;
 }
 
-:deep(.el-tabs--card>.el-tabs__header .el-tabs__item.is-active) {
+:deep(.el-tabs--card > .el-tabs__header .el-tabs__item.is-active) {
   border-bottom: none;
 }
 </style>

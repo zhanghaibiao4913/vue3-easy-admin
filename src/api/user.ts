@@ -4,7 +4,7 @@
  * @param {string} password
  * @return {*}
  */
-export function login(account: string, password: string): Promise<T> {
+export function login() {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
@@ -30,7 +30,7 @@ export function getPermissionCodes() {
         'ZH_SALE_ORDER_LIST',
         'ZH_PURCHASE_ORDER_LIST',
         'ZH_BRAND_LIST',
-        'ZH_BRAND_OPERATION',
+        'ZH_BRAND_OPERATION'
       ])
     }, 1500)
   })

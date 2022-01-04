@@ -3,19 +3,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+
 export default defineComponent({
   name: 'BrandList'
 })
 </script>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-
 onMounted(() => {
   console.log('mounted===')
 })
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

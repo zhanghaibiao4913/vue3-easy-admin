@@ -1,6 +1,6 @@
 <template>
   <div class="layout-wrapper">
-    <side-bar style="flex: 0 0 auto;" />
+    <side-bar style="flex: 0 0 auto" />
     <div class="right-wrapper">
       <header-bar />
       <tabs-bar v-if="isShowTabs" />
@@ -12,12 +12,12 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
+import { useAppStore } from '@/store/modules/app'
 import MainContainer from './main-container/index.vue'
 import HeaderBar from './header-bar/index.vue'
 import SideBar from './side-bar/index.vue'
 import TabsBar from './tabs-bar/index.vue'
-import { useAppStore } from '@/store/modules/app'
-import { computed } from 'vue'
 
 const appStore = useAppStore()
 const isShowTabs = computed(() => appStore.isShowTabs)

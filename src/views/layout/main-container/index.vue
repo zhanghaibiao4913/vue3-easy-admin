@@ -17,5 +17,4 @@ const enableKeepAlive = computed(() => appStore.enableKeepAlive)
 const keepAliveList = computed(() => tabsStore.keepAliveList || [])
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

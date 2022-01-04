@@ -11,5 +11,4 @@
 import welcomImg from '@/assets/image/welcome.png'
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

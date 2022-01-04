@@ -3,21 +3,49 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: [
-    'plugin:vue/vue3-essential',
-    'airbnb-base'
-  ],
+  extends: ['plugin:vue/vue3-essential', 'airbnb-base', 'plugin:prettier/recommended'],
   parserOptions: {
     ecmaVersion: 13,
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
-  plugins: [
-    'vue',
-    '@typescript-eslint',
-    'plugin:prettier/recommended' // 添加 prettier 插件
-  ],
+  plugins: ['vue', '@typescript-eslint'],
   rules: {
-    'comma-dangle': 0
+    'no-console': 'off',
+    'comma-dangle': 0,
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never'
+      }
+    ],
+    'prettier/prettier': [
+      'error',
+      {
+        htmlWhitespaceSensitivity: 'ignore',
+        arrowParens: 'avoid'
+      }
+    ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true
+      }
+    ],
+    'import/prefer-default-export': 0,
+    'prefer-destructuring': 0,
+    'no-else-return': 0,
+    'array-callback-return': 0
+  },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: `${__dirname}/tsconfig.json`
+      }
+    }
   }
 }

@@ -20,12 +20,9 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button 
-            type="primary" 
-            style="width: 100%;" 
-            @click="handleLogin" 
-            :loading="btnLoading"
-          >登录</el-button>
+          <el-button type="primary" style="width: 100%" @click="handleLogin" :loading="btnLoading">
+            登录
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -48,12 +45,8 @@ const btnLoading = ref(false)
 const userStore = useUserStore()
 const router = useRouter()
 const rules = {
-  account: [
-    { required: true, message: '请输入账号', trigger: 'blur'}
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur'}
-  ]
+  account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
 // 登录处理
 const handleLogin = () => {
@@ -86,7 +79,7 @@ const handleLogin = () => {
   width: 100%;
   height: 100%;
   background: url('@/assets/image/login-bg.jpeg') no-repeat;
-  background-size:  cover;
+  background-size: cover;
   position: relative;
   min-height: 400px;
   .form-container {

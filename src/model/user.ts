@@ -1,5 +1,4 @@
 export interface LoginUser {
-  id: String;
-  name: string;
+  id: String
+  name: string
 }
-

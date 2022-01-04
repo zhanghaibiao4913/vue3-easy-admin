@@ -11,39 +11,26 @@
       </div>
     </div>
   </div>
-  <el-drawer 
-    v-model="drawer" 
-    :with-header="false"
-    :size="300"
-  >
+  <el-drawer v-model="drawer" :with-header="false" :size="300">
     <div class="h-full flex-col">
       <div class="drawer-header">
         <svg-icon name="avatar" class-name="fs40" color="#fff" />
         <div>{{ userInfo.name }}</div>
       </div>
-      <div class="flex-1 y-scroll plr10 ptb20" style="background: #e5f0ff;">
+      <div class="flex-1 y-scroll plr10 ptb20" style="background: #e5f0ff">
         <div class="flex items-center justify-between mb20">
           <span>显示标签页</span>
-          <el-switch
-            v-model="isShowTabs"
-            inline-prompt
-            active-text="开"
-            inactive-text="关"
-          />
+          <el-switch v-model="isShowTabs" inline-prompt active-text="开" inactive-text="关" />
         </div>
         <div class="flex items-center justify-between mb20">
           <span>组件尺寸</span>
-          <el-select
-            v-model="uiSize"
-            style="width: 110px"
-          >
+          <el-select v-model="uiSize" style="width: 110px">
             <el-option
               v-for="item in uiOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </div>
         <div class="flex items-center justify-between mb20">
@@ -57,21 +44,11 @@
         </div>
         <div class="flex items-center justify-between mb20">
           <span>只保持一个子菜单的展开</span>
-          <el-switch
-            v-model="uniqueOpened"
-            inline-prompt
-            active-text="是"
-            inactive-text="否"
-          />
+          <el-switch v-model="uniqueOpened" inline-prompt active-text="是" inactive-text="否" />
         </div>
         <div class="flex items-center justify-between">
           <span>路由页面缓存</span>
-          <el-switch
-            v-model="enableKeepAlive"
-            inline-prompt
-            active-text="开"
-            inactive-text="关"
-          />
+          <el-switch v-model="enableKeepAlive" inline-prompt active-text="开" inactive-text="关" />
         </div>
       </div>
       <el-button @click="onLogout">退出</el-button>
@@ -89,7 +66,7 @@ import logo from '@/assets/image/logo.png'
 const { proxy } = getCurrentInstance()
 const userStore = useUserStore()
 const appStore = useAppStore()
-const userInfo = computed(() => userStore.userInfo || {})
+const userInfo = computed(() => userStore.userInfo)
 const drawer = ref(false)
 
 const isShowTabs = computed({
@@ -104,7 +81,7 @@ const menuWidth = computed({
   get: () => {
     return appStore.menuWidth
   },
-  set: (newValue) => {
+  set: newValue => {
     appStore.updateMenuWidth(newValue)
   }
 })
@@ -113,11 +90,13 @@ const uiSize = computed({
   get: () => {
     return appStore.uiSize
   },
-  set: (newValue) => {
+  set: newValue => {
     proxy.$ELEMENT.size = newValue
     appStore.updateUiSize(newValue)
     setTimeout(() => {
-      reloadApp && reloadApp()
+      if (reloadApp) {
+        reloadApp()
+      }
     }, 100)
   }
 })
@@ -151,19 +130,14 @@ const openDrawer = () => {
 }
 
 const onLogout = () => {
-  ElMessageBox.confirm(
-    '确定退出当前登录账号吗？',
-    '提示',
-    {
-      type: 'warning',
-      cancelButtonText: '取消',
-      confirmButtonText: '确定'
-    }
-  ).then(() => {
+  ElMessageBox.confirm('确定退出当前登录账号吗？', '提示', {
+    type: 'warning',
+    cancelButtonText: '取消',
+    confirmButtonText: '确定'
+  }).then(() => {
     userStore.logout()
   })
 }
-
 </script>
 
 <style lang="scss" scoped>

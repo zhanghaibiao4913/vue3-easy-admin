@@ -2,19 +2,16 @@ import { defineStore } from 'pinia'
 import { getPermissionCodes } from '@/api/user'
 import dynamicRoutes from '@/router/dynamic'
 import constantRoutes from '@/router/constant'
-import router from '@/router'
-import { useTabsStore } from './tabs'
 import { cloneDeep } from 'lodash-es'
+import { useTabsStore } from './tabs'
 
 function filterDynamicRoutes(list, codes) {
-  for (let i = list.length-1; i >= 0; i--) {
-    let item = list[i]
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const item = list[i]
     if (item.children) {
       filterDynamicRoutes(item.children, codes)
-    } else {
-      if (item.meta && !codes.includes(item.meta.code)) {
-        list.splice(i, 1)
-      }
+    } else if (item.meta && !codes.includes(item.meta.code)) {
+      list.splice(i, 1)
     }
   }
 }
@@ -48,11 +45,8 @@ export const useUserStore = defineStore({
   },
 
   getters: {
-    appMenuList: (state) => {
-      return [
-        ...constantRoutes,
-        ...state.permissionRoutes
-      ]
+    appMenuList: state => {
+      return [...constantRoutes, ...state.permissionRoutes]
     }
   },
 
@@ -61,14 +55,15 @@ export const useUserStore = defineStore({
     setToken(token) {
       this.token = token
     },
-    
+
     // 保存用户信息
     setUserInfo(userInfo) {
       this.userInfo = userInfo
     },
-    
+
     // 请求权限
     async generatePermissionRoutes() {
+      // eslint-disable-next-line prefer-const
       let result = cloneDeep(dynamicRoutes)
       const codes = await getPermissionCodes()
       this.permissionCodes = codes || []
@@ -76,7 +71,7 @@ export const useUserStore = defineStore({
       this.permissionRoutes = result
       return result
     },
-    
+
     // 退出登录
     logout() {
       this.setToken('')

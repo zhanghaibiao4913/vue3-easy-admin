@@ -37,7 +37,7 @@ export const useTabsStore = defineStore({
       }
       this.updateKeepAlive()
     },
-    
+
     removeTab(name) {
       const i = this.tabList.findIndex(e => e.name === name)
       if (i > -1) {
@@ -66,15 +66,19 @@ export const useTabsStore = defineStore({
     },
 
     updateKeepAlive() {
+      // eslint-disable-next-line consistent-return
       this.keepAliveList = this.tabList.map(e => {
         if (e.meta.keepAlive !== false) {
           return e.name
         }
       })
     },
-    
+
     deleteKeepAlive(name) {
-      this.keepAliveList.splice(this.keepAliveList.findIndex(e => e === name), 1)
+      this.keepAliveList.splice(
+        this.keepAliveList.findIndex(e => e === name),
+        1
+      )
     }
   }
 })

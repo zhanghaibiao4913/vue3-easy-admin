@@ -7,9 +7,10 @@ import { useUserStore } from '@/store/modules/user'
  * @param {string} pIdKey 父级关联key
  * @param {any} parentId 判断父级
  * @return {*}
- */ 
+ */
 export const array2Tree = (data: any[], idKey: string, pIdKey: string, parentId: any) => {
-  let treeList: any[] = []
+  const treeList: any[] = []
+  // eslint-disable-next-line no-restricted-syntax
   for (const item of data) {
     if (item[pIdKey] === parentId) {
       const children = array2Tree(data, idKey, pIdKey, item[idKey])
@@ -40,7 +41,7 @@ export const getJson = (jsonStr: string) => {
 /**
  * 扁平化数组
  */
-export const flatArray = (arr, newArr = []) =>  {
+export const flatArray = (arr, newArr = []) => {
   arr.forEach(item => {
     if (item.children) {
       flatArray(item.children, newArr)
@@ -51,17 +52,15 @@ export const flatArray = (arr, newArr = []) =>  {
   return newArr
 }
 
-export const flatRoutes = (routes) =>  {
-  let newRoutes = []
+export const flatRoutes = routes => {
+  const newRoutes = []
   routes.forEach((item, i) => {
     newRoutes.push(cloneDeep(item))
     if (item.children && item.children.length) {
       newRoutes[i].children = []
       item.children.forEach(child => {
         if (child.children) {
-          newRoutes[i].children.push(
-            ...flatArray(child.children || [])
-          )
+          newRoutes[i].children.push(...flatArray(child.children || []))
         } else {
           newRoutes[i].children.push(child)
         }
@@ -71,7 +70,7 @@ export const flatRoutes = (routes) =>  {
   return newRoutes
 }
 
-export const hasPermission = (code) => {
+export const hasPermission = code => {
   const userStore = useUserStore()
   const codes = userStore.permissionCodes || []
   return codes.includes(code)

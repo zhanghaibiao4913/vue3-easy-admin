@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { cloneDeep } from 'lodash-es'
 
 export const useAppStore = defineStore({
   id: 'app',
@@ -53,7 +52,7 @@ export const useAppStore = defineStore({
     toggleUniquiOpened() {
       this.uniqueOpened = !this.uniqueOpened
     },
-    
+
     toggleKeepAlive() {
       this.enableKeepAlive = !this.enableKeepAlive
     },

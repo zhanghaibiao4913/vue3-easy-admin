@@ -13,11 +13,7 @@
           <span>{{ data.meta?.title }}</span>
         </template>
         <template v-if="data.children">
-          <side-bar-item
-            v-for="child in data.children"
-            :key="child.name"
-            :data="child"
-          >
+          <side-bar-item v-for="child in data.children" :key="child.name" :data="child">
             <template #title>{{ child.meta?.title }}</template>
           </side-bar-item>
         </template>
@@ -27,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, defineProps } from 'vue'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { useRouter } from 'vue-router'
 
@@ -73,5 +69,4 @@ const menuItemClick = (m: any) => {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
