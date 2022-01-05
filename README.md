@@ -1,27 +1,199 @@
-# Vue 3 + Typescript + Vite
+<p align="center">
+  <img src="https://zhanghaibiao4913.github.io/vue3-easy-admin/assets/logo.29a35495.png" width="250" height="100" />
+</p>
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+<h1 align="center">vue3-easy-admin</h1>
 
-## Recommended IDE Setup
+<p align="center">一个<b>简洁、开箱即用</b>的 Vue3 后台管理系统</p>
 
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+## 技术栈
 
-### If Using `<script setup>`
+* Vue3
+* Vite2
+* vue-router
+* Pinia.js
+* element-plus
+* ts
 
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
+## 预览
+<p align="center">
+  <img src="https://s2.loli.net/2022/01/05/G17mxrzQERXWID3.png" />
+</p>
+<br/>
+<p align="center">
+  <img src="https://s2.loli.net/2022/01/05/BHG5lfhpcOYZJ16.png" />
+</p>
 
-## Type Support For `.vue` Imports in TS
+[在线预览](https://zhanghaibiao4913.github.io/vue3-easy-admin)
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
+## 快速开始
 
-### If Using Volar
+### clone 项目
+```
+git clone https://github.com/zhanghaibiao4913/vue3-easy-admin.git
+```
 
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+### 下载依赖
+```
+npm install
+```
 
-### If Using Vetur
+### 本地开发
+```
+npm run dev
+```
 
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+### 构建
+```javascript
+// 生产
+npm run build
+
+// 测试
+npm run build:test
+
+// 本地预览
+npm run serve
+```
+
+## 功能
+
+- 基础布局集成
+- 登录逻辑+路由拦截
+- 支持菜单权限，动态生成路由菜单，内置权限按钮指令
+- 多级路由缓存方案
+- Eslint + Prettier + Git Hooks，统一代码规范
+
+## 项目说明
+
+### 配置
+#### 公共配置.env
+任何环境下都会加载.env，
+```javascript
+# 请求超时 60秒
+VITE_TIMEOUT=6000
+```
+
+```javascript
+// 获取配置的常量
+const timeout = import.meta.env.VITE_TIMEOUT
+```
+
+#### 本地开发配置文件
+```javascript
+// .env.development.local
+VITE_BASE_URL="http://localhost:8088"
+```
+
+#### 测试环境配置文件
+```javascript
+// .env.test
+VITE_BASE_URL="http://test.com:8088"
+```
+
+#### 生产环境配置文件
+```javascript
+// .env.production
+VITE_BASE_URL="http://prop.com"
+```
+
+### 路由
+
+- router
+  - constant.ts // 静态路由
+  - dynamic.ts // 动态路由
+
+#### 权限路由
+页面会缓存接口返回的权限编码`permissionCodes`，如果动态路由里在`meta`定义的`code`不在改数组里，则将其过滤掉，从而生成对应的菜单权限。
+
+![](https://s2.loli.net/2022/01/05/TrzEm41IFqiAjDS.png)
+
+#### 配置项
+```javascript
+{
+  path: '/xxx' // 路由路径，需唯一，且以/开头
+  name: '' // 路由名称，需唯一，注意要与.vue文件里的name保持一致，否则keep-alive会不生效
+  meta: {
+    title: '' // 页面名称
+    icon: '' // 菜单icon，与assets/svg下的文件名对应，只在一级菜单上才显示
+    hideMenu: false // 是否在菜单隐藏，默认false
+    affix: false // 是否固定在页签上，默认false
+    code: '' // 路由权限编码，若接口返回的编码数组里存在此code则显示此路由
+    keepAlive: true // 是否缓存路由，默认true
+    auth: true // 是否需要登录才能进入，默认true
+  }
+}
+```
+
+#### 多级路由（三级或以上）
+三级或以上的路由会扁平化处理，将其挂在二级上，用以解决多级路由缓存失效问题。
+在配置多级路由时只需将`component`设置为`null`即可，一级二级正常配置即可。
+```javascript
+{
+  path: '/goods',
+  redict: {
+    name: 'GoodsList'
+  },
+  component: Layout,
+  meta: {
+    title: '商品管理',
+    icon: 'goods'
+  },
+  children: [
+    {
+      name: 'GoodsList',
+      path: '/goods-list',
+      component: () => import('@/views/demo/goods-list/index.vue'),
+      meta: {
+        title: '商品列表',
+        code: 'ZH_GOODS_LIST'
+      }
+    },
+    {
+      name: 'GoodsBrand',
+      path: '/brand',
+      redirect: {
+        name: 'BrandList'
+      },
+      component: null,
+      meta: {
+        title: '品牌管理'
+      },
+      children: [
+        {
+          name: 'BrandList',
+          path: '/brand-list',
+          component: () => import('@/views/demo/brand-list/index.vue'),
+          meta: {
+            title: '品牌列表',
+            code: 'ZH_BRAND_LIST'
+          }
+        },
+        {
+          name: 'BrandOperation',
+          path: '/brand-operation',
+          component: () => import('@/views/demo/brand-operation/index.vue'),
+          meta: {
+            title: '品牌运营',
+            code: 'ZH_BRAND_OPERATION'
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### svg图标
+在`assets/svg`下新增图标，如demo.svg，接着便可以在页面直接使用了。
+```html
+<svg-icon name="demo" />
+```
+添加自定义class类名
+```html
+<svg-icon name="demo" icon-class="" />
+```
+
+### 权限指令
+```html
+<el-button v-auth="'BTN_EDIT'">编辑</el-button>
+```
