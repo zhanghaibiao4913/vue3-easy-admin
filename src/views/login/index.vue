@@ -2,7 +2,7 @@
   <div class="page-container">
     <el-card class="form-container">
       <template #header>
-        <div>后台管理系统</div>
+        <div>{{ title }}</div>
       </template>
       <el-form ref="formRef" :rules="rules" :model="formData" size="medium">
         <el-form-item prop="account">
@@ -41,6 +41,7 @@ import { login as loginRequest } from '@/api/user'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 
+const title = import.meta.env.VITE_APP_TITLE
 const formRef = ref()
 const formData = ref({
   account: 'admin',

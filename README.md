@@ -185,7 +185,7 @@ VITE_BASE_URL="http://prop.com"
 ```
 
 ### svg图标
-在`assets/svg`下新增图标，如demo.svg，接着便可以在页面直接使用了。
+在`assets/svg`下新增图标，如demo.svg，接着便可以在页面直接使用了
 ```html
 <svg-icon name="demo" />
 ```
