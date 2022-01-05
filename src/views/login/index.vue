@@ -13,14 +13,19 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="formData.password" placeholder="登录密码" type="password">
+          <el-input
+            v-model="formData.password"
+            placeholder="登录密码"
+            type="password"
+            @keyup.enter="handleLogin"
+          >
             <template #prepend>
               <el-icon :size="16"><lock /></el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width: 100%" @click="handleLogin" :loading="btnLoading">
+          <el-button type="primary" style="width: 100%" :loading="btnLoading" @click="handleLogin">
             登录
           </el-button>
         </el-form-item>
@@ -38,8 +43,8 @@ import { ElNotification } from 'element-plus'
 
 const formRef = ref()
 const formData = ref({
-  account: '',
-  password: ''
+  account: 'admin',
+  password: '123456'
 })
 const btnLoading = ref(false)
 const userStore = useUserStore()

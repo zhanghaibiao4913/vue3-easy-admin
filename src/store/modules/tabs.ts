@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { cloneDeep } from '@/utils/clone'
+import { cloneDeep } from '@/utils'
 
 export const useTabsStore = defineStore({
   id: 'tabs',
