@@ -22,7 +22,10 @@ export const useUserStore = defineStore({
   state: () => {
     return {
       token: '',
-      userInfo: {},
+      userInfo: {
+        id: '',
+        name: ''
+      },
       // 权限编码
       permissionCodes: [],
       // 根据权限编码过滤出来的权限路由

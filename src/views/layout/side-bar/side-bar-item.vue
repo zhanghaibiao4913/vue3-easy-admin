@@ -23,10 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps } from 'vue'
+import { computed } from 'vue'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { useRouter } from 'vue-router'
 
+// eslint-disable-next-line no-undef
 const props = defineProps({
   data: {
     type: Object,
