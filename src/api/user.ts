@@ -1,10 +1,20 @@
+interface UserInfo {
+  id: string
+  name: string
+}
+interface LogingRes {
+  userInfo: UserInfo
+  token: string
+}
 /**
  * @description: 模拟登录
  * @param {string} account
  * @param {string} password
  * @return {*}
  */
-export function login() {
+
+export const login = (account, password): Promise<LogingRes> => {
+  console.log(account, password)
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
@@ -22,7 +32,7 @@ export function login() {
  * @description: 获取用户权限编码
  * @return {*}
  */
-export function getPermissionCodes() {
+export const getPermissionCodes = (): Promise<string[]> => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve([

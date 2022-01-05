@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from '@/utils/clone'
 
 export const useTabsStore = defineStore({
   id: 'tabs',
@@ -9,17 +9,6 @@ export const useTabsStore = defineStore({
       tabList: [],
       keepAliveList: []
     }
-  },
-
-  getters: {
-    // keepAliveList: (state) => {
-    //   const names = state.tabList.map(e => {
-    //     if (e.meta.keepAlive !== false) {
-    //       return e.name
-    //     }
-    //   })
-    //   return names
-    // }
   },
 
   // 持久化

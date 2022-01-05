@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
 import { ElLoading } from 'element-plus'
 import { flatRoutes } from '@/utils'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from '@/utils/clone'
 import constantRoutes from './constant'
 
 const router = createRouter({

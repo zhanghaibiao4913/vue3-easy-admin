@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { getPermissionCodes } from '@/api/user'
 import dynamicRoutes from '@/router/dynamic'
 import constantRoutes from '@/router/constant'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from '@/utils/clone'
 import { useTabsStore } from './tabs'
 
 function filterDynamicRoutes(list, codes) {

@@ -39,7 +39,8 @@ module.exports = {
     'import/prefer-default-export': 0,
     'prefer-destructuring': 0,
     'no-else-return': 0,
-    'array-callback-return': 0
+    'array-callback-return': 0,
+    'no-plusplus': 0
   },
   settings: {
     'import/resolver': {

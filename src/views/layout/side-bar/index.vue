@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar :view-style="{ height: '100%', width: menuWidth + 'px' }">
+  <el-scrollbar :view-style="viewStyle">
     <el-menu
       :unique-opened="uniqueOpened"
       :default-active="currentPath"
@@ -32,6 +32,12 @@ const appMenuList = computed(() => userStore.appMenuList)
 const currentPath = computed(() => route.path)
 const menuWidth = computed(() => appStore.menuWidth)
 const uniqueOpened = computed(() => appStore.uniqueOpened)
+const viewStyle = computed(
+  () => `
+    height: 100%;
+    width: ${menuWidth.value}px
+  `
+)
 </script>
 
 <style lang="scss" scoped></style>

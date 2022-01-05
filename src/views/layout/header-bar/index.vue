@@ -44,7 +44,7 @@
         </div>
         <div class="flex items-center justify-between mb20">
           <span>只保持一个子菜单的展开</span>
-          <el-switch v-model="uniqueOpened" inline-prompt active-text="是" inactive-text="否" />
+          <el-switch v-model="uniqueOpened" inline-prompt active-text="开" inactive-text="关" />
         </div>
         <div class="flex items-center justify-between">
           <span>路由页面缓存</span>
