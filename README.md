@@ -51,7 +51,7 @@ npm run build
 // 测试
 npm run build:test
 
-// 本地预览
+// 预览本地构建的产物
 npm run serve
 ```
 
