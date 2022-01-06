@@ -3,14 +3,23 @@
     <div>
       <img :src="logo" width="115" height="40" />
     </div>
-    <div>
-      <div @click="openDrawer" class="pointer">
+    <div class="flex items-center">
+      <el-icon class="fs22 mr10 pointer" @click="handleRefresh">
+        <refresh color="#707070" />
+      </el-icon>
+      <svg-icon
+        :name="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"
+        class-name="fs22 pointer"
+        @click="toggleFullscreen()"
+      />
+      <div @click="openDrawer" class="pointer ml10">
         <svg-icon name="avatar" class-name="fs26" />
         <span>{{ userInfo.name }}</span>
         <el-icon class="el-icon--right"><caret-bottom /></el-icon>
       </div>
     </div>
   </div>
+  <!--  -->
   <el-drawer v-model="drawer" :with-header="false" :size="300">
     <div class="h-full flex-col">
       <div class="drawer-header">
@@ -58,16 +67,23 @@
 
 <script lang="ts" setup>
 import { computed, inject, ref, getCurrentInstance } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessageBox } from 'element-plus'
+import { useFullscreen } from '@vueuse/core'
 import { useUserStore } from '@/store/modules/user'
 import { useAppStore } from '@/store/modules/app'
-import { ElMessageBox } from 'element-plus'
+import { useTabsStore } from '@/store/modules/tabs'
 import logo from '@/assets/image/logo.png'
 
 const { proxy } = getCurrentInstance()
+const router = useRouter()
+const route = useRoute()
 const userStore = useUserStore()
 const appStore = useAppStore()
+const tabsStore = useTabsStore()
 const userInfo = computed(() => userStore.userInfo)
 const drawer = ref(false)
+const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
 
 const isShowTabs = computed({
   get: () => {
@@ -136,6 +152,18 @@ const onLogout = () => {
     confirmButtonText: '确定'
   }).then(() => {
     userStore.logout()
+  })
+}
+
+// 刷新当前路由页面
+const handleRefresh = () => {
+  tabsStore.deleteKeepAlive(route.name as string)
+  router.replace({
+    path: '/redirect',
+    query: {
+      ...route.query,
+      redirectPath: route.path
+    }
   })
 }
 </script>

@@ -1,6 +1,6 @@
 import { useUserStore } from '@/store/modules/user'
 
-export const cloneDeep = (obj, hash = new WeakMap()) => {
+export const cloneDeep = (obj: any, hash = new WeakMap()) => {
   if (obj === null) return obj // 如果是null或者undefined我就不进行拷贝操作
   if (obj instanceof Date) return new Date(obj)
   if (obj instanceof RegExp) return new RegExp(obj)
@@ -63,7 +63,7 @@ export const getJson = (jsonStr: string) => {
 /**
  * 扁平化数组
  */
-export const flatArray = (arr, newArr = []) => {
+export const flatArray = (arr: any[], newArr: any[] = []) => {
   arr.forEach(item => {
     if (item.children) {
       flatArray(item.children, newArr)
@@ -74,13 +74,13 @@ export const flatArray = (arr, newArr = []) => {
   return newArr
 }
 
-export const flatRoutes = routes => {
-  const newRoutes = []
+export const flatRoutes = (routes: any[]) => {
+  const newRoutes: any[] = []
   routes.forEach((item, i) => {
     newRoutes.push(cloneDeep(item))
     if (item.children && item.children.length) {
       newRoutes[i].children = []
-      item.children.forEach(child => {
+      item.children.forEach((child: { children: any }) => {
         if (child.children) {
           newRoutes[i].children.push(...flatArray(child.children || []))
         } else {
@@ -92,8 +92,8 @@ export const flatRoutes = routes => {
   return newRoutes
 }
 
-export const hasPermission = code => {
+export const hasPermission = (code: string) => {
   const userStore = useUserStore()
-  const codes = userStore.permissionCodes || []
+  const codes: string[] = userStore.permissionCodes || []
   return codes.includes(code)
 }

@@ -4,7 +4,7 @@
       <template #header>
         <div>{{ title }}</div>
       </template>
-      <el-form ref="formRef" :rules="rules" :model="formData" size="medium">
+      <el-form ref="formRef" :rules="rules" :model="formData">
         <el-form-item prop="account">
           <el-input v-model="formData.account" placeholder="登录账号">
             <template #prepend>
