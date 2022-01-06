@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <keep-alive :include="enableKeepAlive ? keepAliveList : []" :max="10">
+    <keep-alive :include="keepAliveList" :max="10">
       <component :is="Component" :key="route.fullPath" />
     </keep-alive>
   </router-view>
@@ -13,8 +13,10 @@ import { useAppStore } from '@/store/modules/app'
 
 const tabsStore = useTabsStore()
 const appStore = useAppStore()
-const enableKeepAlive = computed(() => appStore.enableKeepAlive)
-const keepAliveList = computed(() => tabsStore.keepAliveList || [])
+const enableKeepAlive = computed<boolean>(() => appStore.enableKeepAlive)
+const keepAliveList = computed<string[]>(() => {
+  return enableKeepAlive.value ? (tabsStore.keepAliveList as string[]) : []
+})
 </script>
 
 <style lang="scss" scoped></style>

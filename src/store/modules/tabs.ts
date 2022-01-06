@@ -2,15 +2,15 @@ import { defineStore } from 'pinia'
 import type { RouteLocationNormalized, RouteRecordRaw, RouteRecordName } from 'vue-router'
 import { cloneDeep } from '@/utils'
 
-interface Tabs {
+interface TabsState {
   tabList: RouteLocationNormalized[]
-  keepAliveList: (RouteRecordName | undefined)[]
+  keepAliveList: (string | undefined)[]
 }
 
 export const useTabsStore = defineStore({
   id: 'tabs',
 
-  state: (): Tabs => {
+  state: (): TabsState => {
     return {
       tabList: [],
       keepAliveList: []

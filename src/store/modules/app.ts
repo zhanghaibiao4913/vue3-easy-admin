@@ -55,10 +55,6 @@ export const useAppStore = defineStore({
 
     toggleKeepAlive() {
       this.enableKeepAlive = !this.enableKeepAlive
-    },
-
-    togglePermission() {
-      this.enablePermission = !this.enablePermission
     }
   }
 })

@@ -5,7 +5,7 @@ import constantRoutes from '@/router/constant'
 import { cloneDeep } from '@/utils'
 import { useTabsStore } from './tabs'
 
-function filterDynamicRoutes(list, codes) {
+function filterDynamicRoutes(list: any[], codes: string[]) {
   for (let i = list.length - 1; i >= 0; i -= 1) {
     const item = list[i]
     if (item.children) {
@@ -16,10 +16,22 @@ function filterDynamicRoutes(list, codes) {
   }
 }
 
+interface UserInfo {
+  id: string
+  name: string
+}
+
+interface UserState {
+  token: string
+  userInfo: UserInfo | null
+  permissionCodes: string[]
+  permissionRoutes: any[]
+}
+
 export const useUserStore = defineStore({
   id: 'user',
 
-  state: () => {
+  state: (): UserState => {
     return {
       token: '',
       userInfo: {
@@ -55,12 +67,12 @@ export const useUserStore = defineStore({
 
   actions: {
     // 保存token
-    setToken(token) {
+    setToken(token: string) {
       this.token = token
     },
 
     // 保存用户信息
-    setUserInfo(userInfo) {
+    setUserInfo(userInfo: UserInfo | null) {
       this.userInfo = userInfo
     },
 

@@ -13,7 +13,7 @@ interface LogingRes {
  * @return {*}
  */
 
-export const login = (account, password): Promise<LogingRes> => {
+export const login = (account: string, password: string): Promise<LogingRes> => {
   console.log(account, password)
   return new Promise(resolve => {
     setTimeout(() => {
