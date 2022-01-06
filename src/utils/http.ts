@@ -6,7 +6,7 @@ const baseURL = import.meta.env.VITE_BASE_URL
 const timeout = import.meta.env.VITE_TIMEOUT
 const http = axios.create({
   baseURL,
-  timeout,
+  timeout: Number(timeout),
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
