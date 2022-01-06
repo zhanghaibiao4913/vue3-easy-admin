@@ -5,6 +5,7 @@ import { resolve } from 'path'
 // import Components from 'unplugin-vue-components/vite'
 // import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import VitePluginSvgIcons from 'vite-plugin-svg-icons'
+import VitePluginCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,11 +26,23 @@ export default defineConfig({
     VitePluginSvgIcons({
       iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
       symbolId: 'icon-[dir]-[name]'
+    }),
+    VitePluginCompression({
+      threshold: 10240 // 超过10kb进行压缩
     })
   ],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
+    }
+  },
+  build: {
+    terserOptions: {
+      compress: {
+        // 生产环境打包配置 去除 console debugger
+        drop_console: true,
+        drop_debugger: true
+      }
     }
   }
 })
