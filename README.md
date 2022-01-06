@@ -16,6 +16,8 @@
 * ts
 
 ## 预览
+[在线预览](https://zhanghaibiao4913.github.io/vue3-easy-admin)
+
 <p align="center">
   <img src="https://s2.loli.net/2022/01/05/G17mxrzQERXWID3.png" />
 </p>
@@ -23,8 +25,6 @@
 <p align="center">
   <img src="https://s2.loli.net/2022/01/05/BHG5lfhpcOYZJ16.png" />
 </p>
-
-[在线预览](https://zhanghaibiao4913.github.io/vue3-easy-admin)
 
 ## 快速开始
 
