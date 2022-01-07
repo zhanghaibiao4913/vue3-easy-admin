@@ -1,0 +1,1 @@
+import{d as s,o as e,c as a,m as l,v as c}from"./vendor.24909798.js";const t={class:"full flex justify-center items-center"},r={class:"align-center"},o=l("p",{class:"bold fs30"},"Welcome!",-1);var i=s({setup:s=>(s,i)=>(e(),a("div",t,[l("div",r,[l("img",{src:c("./assets/welcome.b828b5f0.png"),width:"600"},null,8,["src"]),o])]))});export{i as default};
