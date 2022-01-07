@@ -1,6 +1,6 @@
 <template>
   <div v-if="!data.meta?.hideMenu">
-    <template v-if="lastItem">
+    <template v-if="lastItem && !lastItem.children">
       <el-menu-item :index="lastItem.path" @click="menuItemClick">
         <svg-icon v-if="icon" :name="icon" />
         <template #title>{{ lastItem.meta?.title }}</template>

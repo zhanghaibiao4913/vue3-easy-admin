@@ -14,7 +14,7 @@
       />
       <div @click="openDrawer" class="pointer ml10">
         <svg-icon name="avatar" class-name="fs26" />
-        <span>{{ userInfo.name }}</span>
+        <span>{{ userInfo?.username }}</span>
         <el-icon class="el-icon--right"><caret-bottom /></el-icon>
       </div>
     </div>
@@ -22,9 +22,15 @@
   <!--  -->
   <el-drawer v-model="drawer" :with-header="false" :size="300">
     <div class="h-full flex-col">
-      <div class="drawer-header">
-        <svg-icon name="avatar" class-name="fs40" color="#fff" />
-        <div>{{ userInfo.name }}</div>
+      <div class="drawer-header flex-col justify-center">
+        <div class="mb10">ID：{{ userInfo?.id }}</div>
+        <div class="flex items-center">
+          <svg-icon name="avatar" class-name="fs48" color="#fff" />
+          <div>
+            <p class="mb8">{{ userInfo?.username }}</p>
+            <p>{{ userInfo?.phone }}</p>
+          </div>
+        </div>
       </div>
       <div class="flex-1 y-scroll plr10 ptb20" style="background: #e5f0ff">
         <div class="flex items-center justify-between mb20">
@@ -84,7 +90,6 @@ const tabsStore = useTabsStore()
 const userInfo = computed(() => userStore.userInfo)
 const drawer = ref(false)
 const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
-
 const isShowTabs = computed({
   get: () => {
     return appStore.isShowTabs
@@ -122,7 +127,6 @@ const uiOptions = ref([
   { label: '小（small）', value: 'small' },
   { label: '极小（mini）', value: 'mini' }
 ])
-
 const uniqueOpened = computed({
   get: () => {
     return appStore.uniqueOpened
@@ -131,7 +135,6 @@ const uniqueOpened = computed({
     appStore.toggleUniquiOpened()
   }
 })
-
 const enableKeepAlive = computed({
   get: () => {
     return appStore.enableKeepAlive
@@ -144,7 +147,6 @@ const enableKeepAlive = computed({
 const openDrawer = () => {
   drawer.value = true
 }
-
 const onLogout = () => {
   ElMessageBox.confirm('确定退出当前登录账号吗？', '提示', {
     type: 'warning',
@@ -154,7 +156,6 @@ const onLogout = () => {
     userStore.logout()
   })
 }
-
 // 刷新当前路由页面
 const handleRefresh = () => {
   tabsStore.deleteKeepAlive(route.name as string)
@@ -187,8 +188,6 @@ const handleRefresh = () => {
   height: 140px;
   background-color: var(--el-color-primary);
   color: var(--el-color-white);
-  display: flex;
-  align-items: center;
   padding: 0 20px;
 }
 </style>

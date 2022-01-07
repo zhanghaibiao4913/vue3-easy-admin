@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
-import { login as loginRequest } from '@/api/user'
+import { login as loginRequest } from '@/service/api/user'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 
@@ -60,14 +60,14 @@ const handleLogin = () => {
     if (valid) {
       try {
         btnLoading.value = true
-        const data = await loginRequest(formData.value.account, formData.value.password)
-        userStore.setUserInfo(data.userInfo)
-        userStore.setToken(data.token)
+        const { data } = await loginRequest(formData.value.account, formData.value.password)
+        userStore.setUserInfo(data)
+        userStore.setToken(data.accessToken)
         router.push('/')
         ElNotification({
           type: 'success',
           title: '登录成功',
-          message: `欢迎回来，${data.userInfo.name}`,
+          message: `欢迎回来，${data.username}`,
           showClose: true,
           offset: 100,
           duration: 3000

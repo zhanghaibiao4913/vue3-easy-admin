@@ -40,7 +40,9 @@ module.exports = {
     'prefer-destructuring': 0,
     'no-else-return': 0,
     'array-callback-return': 0,
-    'no-plusplus': 0
+    'no-plusplus': 0,
+    'import/order': 0,
+    '@typescript-eslint/no-unused-vars': ['error']
   },
   settings: {
     'import/resolver': {

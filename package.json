@@ -2,7 +2,7 @@
   "name": "vite-vue3-admin",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite --host --mode dev",
     "build": "vite build",
     "build:test": "vite build --mode test",
     "serve": "vite preview",

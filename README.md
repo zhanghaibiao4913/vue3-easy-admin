@@ -81,7 +81,7 @@ const timeout = import.meta.env.VITE_TIMEOUT
 
 #### 本地开发配置文件
 ```javascript
-// .env.development.local
+// .env.dev
 VITE_BASE_URL="http://localhost:8088"
 ```
 
@@ -146,7 +146,7 @@ VITE_BASE_URL="http://prop.com"
       component: () => import('@/views/demo/goods-list/index.vue'),
       meta: {
         title: '商品列表',
-        code: 'ZH_GOODS_LIST'
+        code: 'A'
       }
     },
     {
@@ -166,7 +166,7 @@ VITE_BASE_URL="http://prop.com"
           component: () => import('@/views/demo/brand-list/index.vue'),
           meta: {
             title: '品牌列表',
-            code: 'ZH_BRAND_LIST'
+            code: 'B'
           }
         },
         {
@@ -175,7 +175,7 @@ VITE_BASE_URL="http://prop.com"
           component: () => import('@/views/demo/brand-operation/index.vue'),
           meta: {
             title: '品牌运营',
-            code: 'ZH_BRAND_OPERATION'
+            code: 'C'
           }
         }
       ]

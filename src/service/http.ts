@@ -1,10 +1,13 @@
+/* eslint-disable no-param-reassign */
 import axios, { AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/store/modules/user'
 
 const tokeyKey = import.meta.env.VITE_TOKEN_KEY
 const baseURL = import.meta.env.VITE_BASE_URL
 const timeout = import.meta.env.VITE_TIMEOUT
-const http = axios.create({
+// 创建实例
+const instance = axios.create({
   baseURL,
   timeout: Number(timeout),
   headers: {
@@ -12,11 +15,14 @@ const http = axios.create({
   }
 })
 
-http.interceptors.request.use(
+// 请求拦截
+instance.interceptors.request.use(
   config => {
-    // if (token) {
-    //   config.headers[tokeyKey] = token
-    // }
+    const userStore = useUserStore()
+    if (userStore.token && config.headers) {
+      // eslint-disable-next-line no-param-reassign
+      config.headers[tokeyKey] = userStore.token
+    }
     return config
   },
   error => {
@@ -24,49 +30,48 @@ http.interceptors.request.use(
   }
 )
 
-http.interceptors.response.use(
+// 响应拦截
+instance.interceptors.response.use(
   response => {
     // console.log('response=>', response)
     const token = response.headers[tokeyKey]
     if (token) {
       // 更新token
+      const userStore = useUserStore()
+      userStore.setToken(token)
     }
     const { status, data } = response
     if (status === 200) {
-      const { resultCode, resultMsg } = data
-      if (resultCode === '0') {
+      const { code, message } = data
+      if (code === 0) {
         return data
       }
-      ElMessage.error(resultMsg || '接口请求异常，请稍后重试')
+      ElMessage.error(message || '接口请求异常')
       return Promise.reject(data)
     }
-    ElMessage.error(`【${status}】服务器响应异常`)
+    ElMessage.error(`${status}服务器响应异常`)
     return Promise.reject(data)
   },
   error => {
     // console.log('error.response=>', error.response)
-    const { response } = error
+    const { response, code, message, config } = error
     if (!response) {
       ElMessage.error('连接失败，请检查网络')
     } else {
-      const { code, message } = error
-      const { _retry } = error.config
-      const { status } = response
+      const { _retry } = config
+      const { status, data } = response
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1 && !_retry) {
-        ElMessage.error('请求超时')
-      } else if (status === 401) {
-        ElMessage.error(`【${response.data.code}】${response.data.msg}`)
+        ElMessage.error('连接超时，请稍后重试')
       } else {
-        const msg = response.data.message
-        ElMessage.error(`【${status}】${msg}`)
+        ElMessage.error(`${status}${data.message || 'error'}`)
       }
     }
     return Promise.reject(error)
   }
 )
 
-const request = <T>(config: AxiosRequestConfig): Promise<T> => {
-  return http.request(config)
+export const request = <T>(config: AxiosRequestConfig): Promise<T> => {
+  return instance.request(config)
 }
 
-export default request
+export default instance

@@ -18,7 +18,7 @@ export default [
         component: () => import('@/views/demo/goods-list/index.vue'),
         meta: {
           title: '商品列表',
-          code: 'ZH_GOODS_LIST'
+          code: 'A'
         }
       },
       {
@@ -38,7 +38,7 @@ export default [
             component: () => import('@/views/demo/brand-list/index.vue'),
             meta: {
               title: '品牌列表',
-              code: 'ZH_BRAND_LIST'
+              code: 'B'
             }
           },
           {
@@ -47,7 +47,7 @@ export default [
             component: () => import('@/views/demo/brand-operation/index.vue'),
             meta: {
               title: '品牌运营',
-              code: 'ZH_BRAND_OPERATION'
+              code: 'C'
             }
           }
         ]
@@ -71,7 +71,7 @@ export default [
         component: () => import('@/views/demo/sale-order-list/index.vue'),
         meta: {
           title: '销售订单',
-          code: 'ZH_SALE_ORDER_LIST'
+          code: 'D'
         }
       },
       {
@@ -80,7 +80,7 @@ export default [
         component: () => import('@/views/demo/purchase-order-list/index.vue'),
         meta: {
           title: '采购订单',
-          code: 'ZH_PURCHASE_ORDER_LIST'
+          code: 'E'
         }
       }
     ]

@@ -26,14 +26,13 @@ router.beforeEach(async to => {
     if (to.name === 'Login') {
       return { name: 'Home' }
     }
-    const permissionRoutes = userStore.permissionRoutes
-    if (permissionRoutes.length === 0) {
+    if (userStore.permissionRoutes.length === 0) {
       const loadingInstance = ElLoading.service({
         text: '加载权限数据'
       })
-      const routes = await userStore.generatePermissionRoutes()
+      await userStore.generatePermissionRoutes()
       // console.log('routes===', routes)
-      const finalRoutes = flatRoutes(cloneDeep(routes))
+      const finalRoutes = flatRoutes(cloneDeep(userStore.permissionRoutes))
       // console.log('finalRoutes===', finalRoutes)
       finalRoutes.forEach(item => {
         router.addRoute(item)

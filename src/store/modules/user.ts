@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { getPermissionCodes } from '@/api/user'
+import { getPermissionCodes } from '@/service/api/user'
 import dynamicRoutes from '@/router/dynamic'
 import constantRoutes from '@/router/constant'
 import { cloneDeep } from '@/utils'
 import { useTabsStore } from './tabs'
+import { UserInfoModel } from '@/model/user'
 
 function filterDynamicRoutes(list: any[], codes: string[]) {
   for (let i = list.length - 1; i >= 0; i -= 1) {
@@ -16,14 +17,9 @@ function filterDynamicRoutes(list: any[], codes: string[]) {
   }
 }
 
-interface UserInfo {
-  id: string
-  name: string
-}
-
 interface UserState {
   token: string
-  userInfo: UserInfo | null
+  userInfo: UserInfoModel | null
   permissionCodes: string[]
   permissionRoutes: any[]
 }
@@ -34,10 +30,7 @@ export const useUserStore = defineStore({
   state: (): UserState => {
     return {
       token: '',
-      userInfo: {
-        id: '',
-        name: ''
-      },
+      userInfo: null,
       // 权限编码
       permissionCodes: [],
       // 根据权限编码过滤出来的权限路由
@@ -72,7 +65,7 @@ export const useUserStore = defineStore({
     },
 
     // 保存用户信息
-    setUserInfo(userInfo: UserInfo | null) {
+    setUserInfo(userInfo: UserInfoModel | null) {
       this.userInfo = userInfo
     },
 
@@ -80,11 +73,11 @@ export const useUserStore = defineStore({
     async generatePermissionRoutes() {
       // eslint-disable-next-line prefer-const
       let result = cloneDeep(dynamicRoutes)
-      const codes = await getPermissionCodes()
-      this.permissionCodes = codes || []
+      const { data } = await getPermissionCodes()
+      this.permissionCodes = data || []
       filterDynamicRoutes(result, this.permissionCodes)
       this.permissionRoutes = result
-      return result
+      console.log('result', result)
     },
 
     // 退出登录
