@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { ElLoading } from 'element-plus'
+import { ElLoading, ElMessage } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useUserStore } from '@/store/modules/user'
@@ -28,16 +28,28 @@ router.beforeEach(async to => {
     }
     if (userStore.permissionRoutes.length === 0) {
       const loadingInstance = ElLoading.service({
-        text: '加载权限数据'
+        text: '加载权限...'
       })
-      await userStore.generatePermissionRoutes()
-      // console.log('routes===', routes)
-      const finalRoutes = flatRoutes(cloneDeep(userStore.permissionRoutes))
-      // console.log('finalRoutes===', finalRoutes)
-      finalRoutes.forEach(item => {
-        router.addRoute(item)
-      })
-      loadingInstance.close()
+      try {
+        const res = await userStore.generatePermissionRoutes()
+        if (res.length === 0) {
+          ElMessage({
+            type: 'warning',
+            message: '权限为空'
+          })
+          userStore.logout()
+        } else {
+          const finalRoutes = flatRoutes(cloneDeep(res))
+          // console.log('finalRoutes===', finalRoutes)
+          finalRoutes.forEach(item => {
+            router.addRoute(item)
+          })
+        }
+      } catch {
+        userStore.logout()
+      } finally {
+        loadingInstance.close()
+      }
       return to.fullPath
     }
     return true
