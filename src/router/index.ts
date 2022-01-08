@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css'
 import { useUserStore } from '@/store/modules/user'
 import { flatRoutes, cloneDeep } from '@/utils'
 import constantRoutes from './constant'
+import Layout from '@/views/layout/index.vue'
 
 NProgress.configure({
   easing: 'ease',
@@ -35,8 +36,11 @@ router.beforeEach(async to => {
         // console.log('permissionRoutes===', res)
         const finalRoutes = flatRoutes(cloneDeep(res))
         // console.log('finalRoutes===', finalRoutes)
-        finalRoutes.forEach(item => {
-          router.addRoute(item)
+        router.addRoute({
+          path: '/layout',
+          name: 'Layout',
+          component: Layout,
+          children: finalRoutes
         })
       } catch {
         userStore.logout()

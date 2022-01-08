@@ -6,6 +6,7 @@
 
 <script lang="ts" setup>
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+// import { ref, nextTick, provide } from 'vue'
 
 const isRouterAlive = ref(true)
 const locale = zhCn

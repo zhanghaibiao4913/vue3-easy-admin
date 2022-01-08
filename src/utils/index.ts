@@ -74,23 +74,35 @@ export const flatArray = (arr: any[], newArr: any[] = []) => {
   return newArr
 }
 
-export const flatRoutes = (routes: any[]) => {
-  const newRoutes: any[] = []
-  routes.forEach((item, i) => {
-    newRoutes.push(cloneDeep(item))
+// 将多久路由扁平化成一级路由
+export const flatRoutes = (routes: any[], newArr: any[] = []) => {
+  routes.forEach(item => {
     if (item.children && item.children.length) {
-      newRoutes[i].children = []
-      item.children.forEach((child: { children: any }) => {
-        if (child.children) {
-          newRoutes[i].children.push(...flatArray(child.children || []))
-        } else {
-          newRoutes[i].children.push(child)
-        }
-      })
+      flatArray(item.children, newArr)
+    } else {
+      newArr.push(item)
     }
   })
-  return newRoutes
+  return newArr
 }
+
+// export const flatRoutes = (routes: any[]) => {
+//   const newRoutes: any[] = []
+//   routes.forEach((item, i) => {
+//     newRoutes.push(cloneDeep(item))
+//     if (item.children && item.children.length) {
+//       newRoutes[i].children = []
+//       item.children.forEach((child: { children: any }) => {
+//         if (child.children) {
+//           newRoutes[i].children.push(...flatArray(child.children || []))
+//         } else {
+//           newRoutes[i].children.push(child)
+//         }
+//       })
+//     }
+//   })
+//   return newRoutes
+// }
 
 export const hasPermission = (code: string) => {
   const userStore = useUserStore()
