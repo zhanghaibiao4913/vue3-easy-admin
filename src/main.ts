@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ElementIcons from '@element-plus/icons-vue'
 // eslint-disable-next-line import/no-unresolved
 import 'vite-plugin-svg-icons/register'
-import * as ElementIcons from '@element-plus/icons-vue'
 import './assets/styles/reset.css'
 import './assets/styles/index.scss'
 import App from './App.vue'

@@ -38,7 +38,7 @@
 import { useUserStore } from '@/store/modules/user'
 import { useRouter } from 'vue-router'
 import { login as loginRequest } from '@/service/api/user'
-import { ElNotification } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const title = import.meta.env.VITE_APP_TITLE
 const formRef = ref()
@@ -63,13 +63,17 @@ const handleLogin = () => {
         userStore.setUserInfo(data)
         userStore.setToken(data.accessToken)
         router.push('/')
-        ElNotification({
-          type: 'success',
-          title: '登录成功',
-          message: `欢迎回来，${data.username}`,
-          showClose: true,
-          offset: 100,
-          duration: 3000
+        // ElNotification({
+        //   type: 'success',
+        //   title: '登录成功',
+        //   message: `欢迎回来，${data.username}`,
+        //   showClose: true,
+        //   offset: 100,
+        //   duration: 3000
+        // })
+        ElMessage({
+          message: '登录成功',
+          type: 'success'
         })
       } finally {
         btnLoading.value = false

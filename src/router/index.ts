@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { ElLoading, ElMessage } from 'element-plus'
+import { ElLoading } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useUserStore } from '@/store/modules/user'
@@ -32,19 +32,12 @@ router.beforeEach(async to => {
       })
       try {
         const res = await userStore.generatePermissionRoutes()
-        if (res.length === 0) {
-          ElMessage({
-            type: 'warning',
-            message: '权限为空'
-          })
-          userStore.logout()
-        } else {
-          const finalRoutes = flatRoutes(cloneDeep(res))
-          // console.log('finalRoutes===', finalRoutes)
-          finalRoutes.forEach(item => {
-            router.addRoute(item)
-          })
-        }
+        // console.log('permissionRoutes===', res)
+        const finalRoutes = flatRoutes(cloneDeep(res))
+        // console.log('finalRoutes===', finalRoutes)
+        finalRoutes.forEach(item => {
+          router.addRoute(item)
+        })
       } catch {
         userStore.logout()
       } finally {
