@@ -19,7 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
 import { useAppStore } from '@/store/modules/app'

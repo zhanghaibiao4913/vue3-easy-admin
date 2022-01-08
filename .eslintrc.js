@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['plugin:vue/vue3-essential', 'airbnb-base', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:vue/vue3-essential',
+    'airbnb-base',
+    'plugin:prettier/recommended',
+    'vue-global-api'
+  ],
   parserOptions: {
     ecmaVersion: 13,
     parser: '@typescript-eslint/parser',
@@ -41,8 +46,7 @@ module.exports = {
     'no-else-return': 0,
     'array-callback-return': 0,
     'no-plusplus': 0,
-    'import/order': 0,
-    '@typescript-eslint/no-unused-vars': ['error']
+    'import/order': 0
   },
   settings: {
     'import/resolver': {

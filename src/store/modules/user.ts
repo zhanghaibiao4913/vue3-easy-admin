@@ -5,7 +5,6 @@ import constantRoutes from '@/router/constant'
 import { cloneDeep } from '@/utils'
 import { useTabsStore } from './tabs'
 import { UserInfoModel } from '@/model/user'
-import router from '@/router'
 
 function filterDynamicRoutes(list: any[], codes: string[]) {
   for (let i = list.length - 1; i >= 0; i -= 1) {
@@ -89,9 +88,8 @@ export const useUserStore = defineStore({
       const tabStore = useTabsStore()
       tabStore.clearTab()
       setTimeout(() => {
-        // window.location.reload()
-        router.push('/login')
-      }, 1000)
+        window.location.reload()
+      }, 500)
     }
   }
 })

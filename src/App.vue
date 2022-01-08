@@ -1,11 +1,14 @@
 <template>
-  <router-view v-if="isRouterAlive" />
+  <el-config-provider :locale="locale">
+    <router-view v-if="isRouterAlive" />
+  </el-config-provider>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, provide, ref } from 'vue'
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
 const isRouterAlive = ref(true)
+const locale = zhCn
 const reload = () => {
   isRouterAlive.value = false
   nextTick(() => {

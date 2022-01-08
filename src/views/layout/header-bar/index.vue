@@ -4,7 +4,7 @@
       <img :src="logo" width="115" height="40" />
     </div>
     <div class="flex items-center">
-      <el-icon class="fs22 mr10 pointer" @click="handleRefresh">
+      <el-icon class="mr10 pointer" @click="handleRefresh" :size="22">
         <refresh color="#707070" />
       </el-icon>
       <svg-icon
@@ -37,7 +37,7 @@
           <span>显示标签页</span>
           <el-switch v-model="isShowTabs" inline-prompt active-text="开" inactive-text="关" />
         </div>
-        <div class="flex items-center justify-between mb20">
+        <!-- <div class="flex items-center justify-between mb20">
           <span>组件尺寸</span>
           <el-select v-model="uiSize" style="width: 110px">
             <el-option
@@ -47,7 +47,7 @@
               :value="item.value"
             ></el-option>
           </el-select>
-        </div>
+        </div> -->
         <div class="flex items-center justify-between mb20">
           <span>菜单宽度</span>
           <el-input-number
@@ -72,7 +72,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, ref, getCurrentInstance } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import { useFullscreen } from '@vueuse/core'
@@ -81,7 +80,7 @@ import { useAppStore } from '@/store/modules/app'
 import { useTabsStore } from '@/store/modules/tabs'
 import logo from '@/assets/image/logo.png'
 
-const { proxy } = getCurrentInstance()
+// const instance = getCurrentInstance()
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
@@ -106,27 +105,27 @@ const menuWidth = computed({
     appStore.updateMenuWidth(newValue)
   }
 })
-const reloadApp = inject<Function>('reload')
-const uiSize = computed({
-  get: () => {
-    return appStore.uiSize
-  },
-  set: newValue => {
-    proxy.$ELEMENT.size = newValue
-    appStore.updateUiSize(newValue)
-    setTimeout(() => {
-      if (reloadApp) {
-        reloadApp()
-      }
-    }, 100)
-  }
-})
-const uiOptions = ref([
-  { label: '大（large）', value: 'large' },
-  { label: '中（medium）', value: 'medium' },
-  { label: '小（small）', value: 'small' },
-  { label: '极小（mini）', value: 'mini' }
-])
+// const reloadApp = inject<Function>('reload')
+// const uiSize = computed({
+//   get: () => {
+//     return appStore.uiSize
+//   },
+//   set: newValue => {
+//     instance?.proxy.$ELEMENT.size = newValue
+//     appStore.updateUiSize(newValue)
+//     setTimeout(() => {
+//       if (reloadApp) {
+//         reloadApp()
+//       }
+//     }, 100)
+//   }
+// })
+// const uiOptions = ref([
+//   { label: '大（large）', value: 'large' },
+//   { label: '中（medium）', value: 'medium' },
+//   { label: '小（small）', value: 'small' },
+//   { label: '极小（mini）', value: 'mini' }
+// ])
 const uniqueOpened = computed({
   get: () => {
     return appStore.uniqueOpened
@@ -149,9 +148,7 @@ const openDrawer = () => {
 }
 const onLogout = () => {
   ElMessageBox.confirm('确定退出当前登录账号吗？', '提示', {
-    type: 'warning',
-    cancelButtonText: '取消',
-    confirmButtonText: '确定'
+    type: 'warning'
   }).then(() => {
     userStore.logout()
   })

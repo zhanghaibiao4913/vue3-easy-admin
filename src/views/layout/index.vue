@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import MainContainer from './main-container/index.vue'
 import HeaderBar from './header-bar/index.vue'

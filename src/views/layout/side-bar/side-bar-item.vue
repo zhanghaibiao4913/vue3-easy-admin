@@ -23,7 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { useRouter } from 'vue-router'
 

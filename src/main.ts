@@ -3,7 +3,6 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // eslint-disable-next-line import/no-unresolved
 import 'vite-plugin-svg-icons/register'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import * as ElementIcons from '@element-plus/icons-vue'
 import './assets/styles/reset.css'
 import './assets/styles/index.scss'
@@ -21,8 +20,7 @@ const appStore = useAppStore()
 // ElementPlus
 app.use(ElementPlus, {
   size: appStore.uiSize,
-  zIndex: 3000,
-  locale: zhCn
+  zIndex: 3000
 })
 
 // 将 element-plus 的图标库注册到全局
@@ -32,7 +30,7 @@ Object.keys(ElementIcons).forEach(key => {
 
 // svg图标组件
 app.component('svg-icon', SvgIcon)
+// 注册指令
 app.use(directive)
-
 app.use(router)
 app.mount('#app')

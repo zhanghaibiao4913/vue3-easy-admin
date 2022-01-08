@@ -35,10 +35,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
-import { login as loginRequest } from '@/service/api/user'
 import { useRouter } from 'vue-router'
+import { login as loginRequest } from '@/service/api/user'
 import { ElNotification } from 'element-plus'
 
 const title = import.meta.env.VITE_APP_TITLE

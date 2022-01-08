@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useTabsStore } from '@/store/modules/tabs'
 import { useAppStore } from '@/store/modules/app'
 
