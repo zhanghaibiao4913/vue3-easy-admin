@@ -3,7 +3,6 @@
     <div class="align-center">
       <img :src="welcomImg" width="600" />
       <p class="bold fs30">Welcome!</p>
-      <el-button>按钮</el-button>
     </div>
   </div>
 </template>
