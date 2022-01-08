@@ -29,11 +29,12 @@
 </p>
 
 ## 开发环境参考
-
+```
 node >= v14.18.0
 npm >= 6.14.15
 vscode
 vscode插件：Volar、Elsint、Prettier
+```
 
 ## 快速开始
 
