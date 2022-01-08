@@ -71,7 +71,7 @@ npm run serve
 - 支持菜单权限，动态生成路由菜单，内置权限按钮指令
 - 多级路由缓存方案
 - Eslint + Prettier + Git Hooks 统一代码规范
-
+- Vue api 自动引入，无需手动import
 ## 项目说明
 
 ### 配置
