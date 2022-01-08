@@ -10,10 +10,12 @@
 
 * Vue3
 * Vite2
+* ts
 * vue-router
 * Pinia.js
 * element-plus
-* ts
+* axios
+* VueUse
 
 ## 预览
 [在线预览](https://zhanghaibiao4913.github.io/vue3-easy-admin)
@@ -25,6 +27,13 @@
 <p align="center">
   <img src="https://s2.loli.net/2022/01/05/BHG5lfhpcOYZJ16.png" />
 </p>
+
+## 开发环境参考
+
+node >= v14.18.0
+npm >= 6.14.15
+vscode
+vscode插件：Volar、Elsint、Prettier
 
 ## 快速开始
 
@@ -55,13 +64,13 @@ npm run build:test
 npm run serve
 ```
 
-## 功能
+## 特点
 
 - 基础布局集成
 - 登录逻辑+路由拦截
 - 支持菜单权限，动态生成路由菜单，内置权限按钮指令
 - 多级路由缓存方案
-- Eslint + Prettier + Git Hooks，统一代码规范
+- Eslint + Prettier + Git Hooks 统一代码规范
 
 ## 项目说明
 
