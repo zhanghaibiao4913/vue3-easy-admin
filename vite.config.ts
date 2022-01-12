@@ -7,6 +7,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import VitePluginSvgIcons from 'vite-plugin-svg-icons'
 import VitePluginCompression from 'vite-plugin-compression'
 import styleImport, { ElementPlusResolve } from 'vite-plugin-style-import'
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
   },
   plugins: [
     PluginVue(),
+    VueSetupExtend(),
     AutoImport({
       dts: 'src/auto-imports.d.ts',
       imports: ['vue'],

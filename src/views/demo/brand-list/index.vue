@@ -2,13 +2,7 @@
   <div>品牌列表</div>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'BrandList'
-})
-</script>
-
-<script lang="ts" setup>
+<script lang="ts" name="BrandList" setup>
 onMounted(() => {
   console.log('mounted===')
 })

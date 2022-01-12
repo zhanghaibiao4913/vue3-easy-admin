@@ -2,13 +2,7 @@
   <div>商品列表</div>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'GoodsList'
-})
-</script>
-
-<script lang="ts" setup>
+<script lang="ts" name="GoodsList" setup>
 onMounted(() => {
   console.log('mounted===')
 })
