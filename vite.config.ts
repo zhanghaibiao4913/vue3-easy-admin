@@ -23,7 +23,10 @@ export default defineConfig({
     AutoImport({
       dts: 'src/auto-imports.d.ts',
       imports: ['vue'],
-      resolvers: [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver()],
+      eslintrc: {
+        enabled: true
+      }
     }),
     Components({
       resolvers: [ElementPlusResolver()]

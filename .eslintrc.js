@@ -7,7 +7,7 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'airbnb-base',
     'plugin:prettier/recommended',
-    'vue-global-api'
+    './.eslintrc-auto-import.json'
   ],
   parserOptions: {
     ecmaVersion: 13,
