@@ -44,8 +44,6 @@
     "useAttrs": true,
     "useCssModule": true,
     "useCssVars": true,
-    "useRoute": true,
-    "useRouter": true,
     "useSlots": true,
     "watch": true,
     "watchEffect": true
