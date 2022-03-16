@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { getPermissionCodes } from '@/service/api/user'
 import dynamicRoutes from '@/router/dynamic'
 import constantRoutes from '@/router/constant'
 import { cloneDeep } from 'lodash-es'
@@ -43,7 +42,7 @@ export const useUserStore = defineStore({
     strategies: [
       {
         storage: localStorage,
-        paths: ['userInfo']
+        paths: ['userInfo', 'permissionCodes']
       },
       {
         storage: sessionStorage,
@@ -69,12 +68,14 @@ export const useUserStore = defineStore({
       this.userInfo = userInfo
     },
 
+    setPermissionCode(codes: string[]) {
+      this.permissionCodes = codes || []
+    },
+
     // 请求权限
-    async generatePermissionRoutes() {
+    generatePermissionRoutes() {
       // eslint-disable-next-line prefer-const
       let result = cloneDeep(dynamicRoutes)
-      const { data } = await getPermissionCodes()
-      this.permissionCodes = data || []
       filterDynamicRoutes(result, this.permissionCodes)
       this.permissionRoutes = result || []
       // console.log('权限路由', this.permissionRoutes)

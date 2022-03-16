@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/store/modules/user'
 import { useRouter } from 'vue-router'
-import { login as loginRequest } from '@/service/api/user'
+import { login as loginRequest, getPermissionCodes } from '@/service/api/user'
 import { ElMessage } from 'element-plus'
 
 const title = import.meta.env.VITE_APP_TITLE
@@ -60,8 +60,10 @@ const handleLogin = () => {
       try {
         btnLoading.value = true
         const { data } = await loginRequest(formData.value.account, formData.value.password)
+        const res = await getPermissionCodes()
         userStore.setUserInfo(data)
         userStore.setToken(data.accessToken)
+        userStore.setPermissionCode(res.data)
         router.push('/')
         // ElNotification({
         //   type: 'success',

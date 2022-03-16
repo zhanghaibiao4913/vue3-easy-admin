@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { ElLoading } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useUserStore } from '@/store/modules/user'
@@ -29,25 +28,16 @@ router.beforeEach(async to => {
       return { name: 'Home' }
     }
     if (userStore.permissionRoutes.length === 0) {
-      const loadingInstance = ElLoading.service({
-        text: '加载权限...'
+      userStore.generatePermissionRoutes()
+      // console.log('permissionRoutes===', userStore.permissionRoutes)
+      const finalRoutes = flatRoutes(cloneDeep(userStore.permissionRoutes))
+      // console.log('finalRoutes===', finalRoutes)
+      router.addRoute({
+        path: '/layout',
+        name: 'Layout',
+        component: Layout,
+        children: finalRoutes
       })
-      try {
-        const res = await userStore.generatePermissionRoutes()
-        // console.log('permissionRoutes===', res)
-        const finalRoutes = flatRoutes(cloneDeep(res))
-        // console.log('finalRoutes===', finalRoutes)
-        router.addRoute({
-          path: '/layout',
-          name: 'Layout',
-          component: Layout,
-          children: finalRoutes
-        })
-      } catch {
-        userStore.logout()
-      } finally {
-        loadingInstance.close()
-      }
       return to.fullPath
     }
     return true
