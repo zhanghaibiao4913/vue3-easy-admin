@@ -18,7 +18,7 @@
     "pinia": "^2.0.6",
     "pinia-plugin-persist": "0.0.92",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.7",

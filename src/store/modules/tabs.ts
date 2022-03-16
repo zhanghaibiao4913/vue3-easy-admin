@@ -41,12 +41,8 @@ export const useTabsStore = defineStore({
       this.updateKeepAlive()
     },
 
-    removeOtherTab(name: RouteRecordName) {
-      this.tabList.forEach((item: RouteLocationNormalized, i: number) => {
-        if (!item.meta?.affix && item.name !== name) {
-          this.tabList.splice(i, 1)
-        }
-      })
+    removeOtherTab(activeName: RouteRecordName) {
+      this.tabList = this.tabList.filter(item => item.meta?.affix || item.name === activeName)
       this.updateKeepAlive()
     },
 
@@ -58,19 +54,15 @@ export const useTabsStore = defineStore({
     removeLeftRight(direction: string, name: RouteRecordName) {
       const index = this.tabList.findIndex((e: RouteLocationNormalized) => e.name === name)
       if (index !== -1) {
-        this.tabList.forEach((item: RouteLocationNormalized, i: number) => {
-          if (!item.meta?.affix) {
-            if (direction === 'left') {
-              if (i < index) {
-                this.tabList.splice(i, 1)
-              }
-            } else if (direction === 'right') {
-              if (i > index) {
-                this.tabList.splice(i, 1)
-              }
-            }
-          }
-        })
+        if (direction === 'left') {
+          this.tabList = this.tabList.filter((item, i) => {
+            return item.meta?.affix || i >= index
+          })
+        } else if (direction === 'right') {
+          this.tabList = this.tabList.filter((item, i) => {
+            return item.meta?.affix || i <= index
+          })
+        }
       }
       this.updateKeepAlive()
     },
