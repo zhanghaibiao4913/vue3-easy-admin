@@ -4,9 +4,8 @@ import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import VitePluginSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import VitePluginCompression from 'vite-plugin-compression'
-import styleImport, { ElementPlusResolve } from 'vite-plugin-style-import'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 // https://vitejs.dev/config/
@@ -31,10 +30,7 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()]
     }),
-    styleImport({
-      resolves: [ElementPlusResolve()]
-    }),
-    VitePluginSvgIcons({
+    createSvgIconsPlugin({
       iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
       symbolId: 'icon-[dir]-[name]'
     }),
