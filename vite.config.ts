@@ -44,6 +44,7 @@ export default defineConfig({
     }
   },
   build: {
+    sourcemap: false,
     terserOptions: {
       compress: {
         // 生产环境打包配置 去除 console debugger

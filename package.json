@@ -14,14 +14,16 @@
     "@vueuse/core": "^7.5.2",
     "axios": "^0.24.0",
     "element-plus": "^2.1.2",
+    "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
-    "pinia": "^2.0.6",
-    "pinia-plugin-persist": "0.0.92",
+    "pinia": "^2.0.12",
+    "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.7",
+    "@types/lodash-es": "^4.17.6",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",

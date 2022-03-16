@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { getPermissionCodes } from '@/service/api/user'
 import dynamicRoutes from '@/router/dynamic'
 import constantRoutes from '@/router/constant'
-import { cloneDeep } from '@/utils'
+import { cloneDeep } from 'lodash-es'
 import { useTabsStore } from './tabs'
 import { UserInfoModel } from '@/model/user'
 
