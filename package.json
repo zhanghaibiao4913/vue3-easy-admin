@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host --mode dev",
+    "build:staging": "vite build --mode staging",
     "build": "vite build",
-    "build:test": "vite build --mode test",
     "serve": "vite preview",
     "prepare": "husky install",
     "lint": "eslint --fix ./src --ext .js,.vue,.ts"
@@ -47,6 +47,7 @@
     "unplugin-vue-components": "^0.17.21",
     "vite": "^2.8.6",
     "vite-plugin-compression": "^0.4.0",
+    "vite-plugin-html": "^3.2.0",
     "vite-plugin-style-import": "^1.4.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-setup-extend": "^0.3.0",

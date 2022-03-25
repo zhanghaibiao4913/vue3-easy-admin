@@ -3,7 +3,7 @@ import dynamicRoutes from '@/router/dynamic'
 import constantRoutes from '@/router/constant'
 import { cloneDeep } from 'lodash-es'
 import { useTabsStore } from './tabs'
-import { UserInfoModel } from '@/model/user'
+import { UserInfoModel } from '@/service/model/user'
 
 function filterDynamicRoutes(list: any[], codes: string[]) {
   for (let i = list.length - 1; i >= 0; i -= 1) {

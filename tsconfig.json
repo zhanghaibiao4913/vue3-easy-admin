@@ -13,10 +13,11 @@
     "baseUrl": "./",
     "paths":{
       "@": ["src"],
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "/#/*": ["types/*"]
     },
     "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "**/*.ts", "types/**/.d.ts"],
   "compileOnSave": true
 }

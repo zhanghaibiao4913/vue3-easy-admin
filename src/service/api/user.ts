@@ -1,6 +1,6 @@
 import { request } from '../http'
-import { ResponseType } from '../types'
-import { UserInfoModel, PermissionCodesModel } from '@/model/user'
+import { ResponseType } from '../model/response'
+import { UserInfoModel, PermissionCodesModel } from '@/service/model/user'
 
 /**
  * @description: 模拟登录
