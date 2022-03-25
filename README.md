@@ -59,7 +59,7 @@ npm run dev
 npm run build
 
 // 测试
-npm run build:test
+npm run build:staging
 
 // 预览本地构建的产物
 npm run serve
@@ -97,7 +97,7 @@ VITE_BASE_URL="http://localhost:8088"
 
 #### 测试环境配置文件
 ```javascript
-// .env.test
+// .env.staging
 VITE_BASE_URL="http://test.com:8088"
 ```
 
@@ -137,14 +137,13 @@ VITE_BASE_URL="http://prop.com"
 
 #### 多级路由（三级或以上）
 三级或以上的路由会扁平化处理，将其挂在二级上，用以解决多级路由缓存失效问题。
-在配置多级路由时只需将`component`设置为`null`即可，一级二级正常配置即可。
+在配置路由时不需要设置`component`。
 ```javascript
 {
   path: '/goods',
   redict: {
     name: 'GoodsList'
   },
-  component: Layout,
   meta: {
     title: '商品管理',
     icon: 'goods'
@@ -165,7 +164,6 @@ VITE_BASE_URL="http://prop.com"
       redirect: {
         name: 'BrandList'
       },
-      component: null,
       meta: {
         title: '品牌管理'
       },
