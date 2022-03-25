@@ -1,12 +1,9 @@
-const Layout = () => import('@/views/layout/index.vue')
-
 export default [
   {
     path: '/goods',
     redict: {
       name: 'GoodsList'
     },
-    component: Layout,
     meta: {
       title: '商品管理',
       icon: 'goods'
@@ -27,7 +24,6 @@ export default [
         redirect: {
           name: 'BrandList'
         },
-        component: null,
         meta: {
           title: '品牌管理'
         },
@@ -59,7 +55,6 @@ export default [
     redict: {
       name: 'SaleOrderList'
     },
-    component: Layout,
     meta: {
       title: '订单管理',
       icon: 'order'
