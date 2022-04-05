@@ -77,16 +77,15 @@ npm run serve
 
 ### 配置
 #### 公共配置文件
-.env文件所有环境下都会加载，可以在里面添加一些不区分环境的配置项。
+.env文件所有环境下都会加载，可以在里面添加一些无需区分环境的配置项。
 ```javascript
 // .env
-# 请求超时 60秒
-VITE_TIMEOUT=6000
+VITE_TOKEN_KEY="authorization"
 ```
 
 ```javascript
 // 获取配置的常量
-const timeout = import.meta.env.VITE_TIMEOUT
+const tokenKey = import.meta.env.VITE_TOKEN_KEY
 ```
 
 #### 本地开发配置文件
@@ -136,54 +135,63 @@ VITE_BASE_URL="http://prop.com"
 ```
 
 #### 多级路由（三级或以上）
-三级或以上的路由会扁平化处理，将其挂在二级上，用以解决多级路由缓存失效问题。
+三级或以上的路由会扁平化处理，用以解决多级路由缓存失效问题。
 在配置路由时不需要设置`component`。
 ```javascript
 {
-  path: '/goods',
+  path: '/order',
   redict: {
-    name: 'GoodsList'
+    name: 'SaleOrderList'
   },
   meta: {
-    title: '商品管理',
-    icon: 'goods'
+    title: '订单管理',
+    icon: 'order'
   },
   children: [
     {
-      name: 'GoodsList',
-      path: '/goods-list',
-      component: () => import('@/views/demo/goods-list/index.vue'),
+      name: 'SaleOrderList',
+      path: '/sale-order-list',
+      component: () => import('@/views/demo/sale-order-list/index.vue'),
       meta: {
-        title: '商品列表',
-        code: 'A'
+        title: '销售订单',
+        code: 'C'
       }
     },
     {
-      name: 'GoodsBrand',
-      path: '/brand',
+      name: 'PurchaseOrderList',
+      path: '/purchase-order-list',
+      component: () => import('@/views/demo/purchase-order-list/index.vue'),
+      meta: {
+        title: '采购订单',
+        code: 'D'
+      }
+    },
+    {
+      name: '2',
+      path: '/2',
       redirect: {
-        name: 'BrandList'
+        name: '31'
       },
       meta: {
-        title: '品牌管理'
+        title: '二级菜单'
       },
       children: [
         {
-          name: 'BrandList',
-          path: '/brand-list',
-          component: () => import('@/views/demo/brand-list/index.vue'),
+          name: '31',
+          path: '/3-1',
+          component: () => import('@/views/demo/3-1/index.vue'),
           meta: {
-            title: '品牌列表',
-            code: 'B'
+            title: '三级菜单一',
+            code: 'E'
           }
         },
         {
-          name: 'BrandOperation',
-          path: '/brand-operation',
-          component: () => import('@/views/demo/brand-operation/index.vue'),
+          name: '32',
+          path: '/3-2',
+          component: () => import('@/views/demo/3-2/index.vue'),
           meta: {
-            title: '品牌运营',
-            code: 'C'
+            title: '三级菜单二',
+            code: 'E'
           }
         }
       ]

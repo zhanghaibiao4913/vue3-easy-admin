@@ -4,11 +4,10 @@ import { useUserStore } from '@/store/user'
 
 const tokeyKey = import.meta.env.VITE_TOKEN_KEY
 const baseURL = import.meta.env.VITE_BASE_URL
-const timeout = import.meta.env.VITE_TIMEOUT
 // 创建实例
 const instance = axios.create({
   baseURL,
-  timeout: Number(timeout),
+  timeout: 6 * 100,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
