@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useAppStore } from '@/store/app'
 import MainContainer from './main-container/index.vue'
 import HeaderBar from './header-bar/index.vue'
 import SideBar from './side-bar/index.vue'

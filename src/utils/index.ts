@@ -1,47 +1,33 @@
-import { useUserStore } from '@/store/modules/user'
-
 /**
- * @description: 数组转树形结构
- * @param {any} data 原数组
- * @param {string} idKey
- * @param {string} pIdKey 父级关联key
- * @param {any} parentId 判断父级
- * @return {*}
+ * 判断是否json字符串
+ * @param str
+ * @returns
  */
-export const array2Tree = (data: any[], idKey: string, pIdKey: string, parentId: any) => {
-  const treeList: any[] = []
-  // eslint-disable-next-line no-restricted-syntax
-  for (const item of data) {
-    if (item[pIdKey] === parentId) {
-      const children = array2Tree(data, idKey, pIdKey, item[idKey])
-      if (children.length > 0) {
-        item.children = children
-      }
-      treeList.push(item)
+export function isJsonStr(str: string): boolean {
+  let result = false
+  try {
+    const data = JSON.parse(str)
+    if (typeof data === 'object' || typeof data === 'boolean') {
+      result = true
     }
+  } catch {
+    result = false
   }
-  return treeList
+  return result
 }
 
-/**
- * @description: json字符串转json
- * @param {string} jsonStr
- * @return {*}
- */
-export const getJson = (jsonStr: string) => {
-  let value = null
-  try {
-    value = JSON.parse(jsonStr)
-  } catch {
-    value = jsonStr
-  }
-  return value
+export function isObject(data: unknown) {
+  return Object.prototype.toString.call(data) === '[object Object]'
+}
+
+export function isBoolean(data: unknown) {
+  return Object.prototype.toString.call(data) === '[object Boolean]'
 }
 
 /**
  * 扁平化数组
  */
-export const flatArray = (arr: any[], newArr: any[] = []) => {
+export function flatArray(arr: any[], newArr: any[] = []) {
   arr.forEach(item => {
     if (item.children) {
       flatArray(item.children, newArr)
@@ -50,22 +36,4 @@ export const flatArray = (arr: any[], newArr: any[] = []) => {
     }
   })
   return newArr
-}
-
-// 将多久路由扁平化成一级路由
-export const flatRoutes = (routes: any[], newArr: any[] = []) => {
-  routes.forEach(item => {
-    if (item.children && item.children.length) {
-      flatArray(item.children, newArr)
-    } else {
-      newArr.push(item)
-    }
-  })
-  return newArr
-}
-
-export const hasPermission = (code: string) => {
-  const userStore = useUserStore()
-  const codes: string[] = userStore.permissionCodes || []
-  return codes.includes(code)
 }

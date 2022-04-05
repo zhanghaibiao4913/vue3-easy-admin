@@ -9,15 +9,22 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "element-plus/global"],
+    "types": ["vite/client", "element-plus/global", "pinia-plugin-persist"],
     "baseUrl": "./",
-    "paths":{
+    "paths": {
       "@": ["src"],
       "@/*": ["src/*"],
       "/#/*": ["types/*"]
     },
     "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "**/*.ts", "types/**/.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "**/*.ts",
+    "types/**/.d.ts"
+  ],
   "compileOnSave": true
 }

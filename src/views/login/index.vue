@@ -35,10 +35,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/store/modules/user'
 import { useRouter } from 'vue-router'
-import { login as loginRequest, getPermissionCodes } from '@/service/api/user'
-import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/store/user'
+import { login as loginRequest } from '@/service/api/user'
+import { ElNotification } from 'element-plus'
 
 const title = import.meta.env.VITE_APP_TITLE
 const formRef = ref()
@@ -60,22 +60,16 @@ const handleLogin = () => {
       try {
         btnLoading.value = true
         const { data } = await loginRequest(formData.value.account, formData.value.password)
-        const res = await getPermissionCodes()
-        userStore.setUserInfo(data)
         userStore.setToken(data.accessToken)
-        userStore.setPermissionCode(res.data)
+        userStore.setUserInfo(data)
         router.push('/')
-        // ElNotification({
-        //   type: 'success',
-        //   title: '登录成功',
-        //   message: `欢迎回来，${data.username}`,
-        //   showClose: true,
-        //   offset: 100,
-        //   duration: 3000
-        // })
-        ElMessage({
-          message: '登录成功',
-          type: 'success'
+        ElNotification({
+          type: 'success',
+          title: '登录成功',
+          message: `欢迎回来，${data.username}`,
+          showClose: true,
+          offset: 100,
+          duration: 3000
         })
       } finally {
         btnLoading.value = false

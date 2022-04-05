@@ -1,4 +1,4 @@
-const Layout = () => import('@/views/layout/index.vue')
+const Layout = () => import('@/layout/index.vue')
 
 export default [
   {
@@ -28,7 +28,8 @@ export default [
         component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
-          affix: true
+          affix: true,
+          keepAlive: false
         }
       }
     ]
@@ -36,13 +37,13 @@ export default [
   {
     path: '/redirect',
     redirect: {
-      name: 'Redirects'
+      name: 'RedirectTo'
     },
     component: Layout,
     children: [
       {
-        path: '/redirects',
-        name: 'Redirects',
+        path: '/redirect-to',
+        name: 'RedirectTo',
         component: () => import('@/views/redirect/index.vue'),
         meta: {
           title: '-',
@@ -50,14 +51,16 @@ export default [
         }
       }
     ]
-  },
-  {
-    path: '/:catchAll(.*)',
-    name: 'NotFound',
-    component: () => import('@/views/error/404.vue'),
-    meta: {
-      title: '404',
-      hideMenu: true
-    }
   }
 ]
+
+// 404
+export const notFoundRoute = {
+  path: '/:path(.*)*',
+  name: 'NotFound',
+  component: () => import('@/views/error/404.vue'),
+  meta: {
+    title: '404',
+    hideMenu: true
+  }
+}

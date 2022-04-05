@@ -4,9 +4,9 @@
       <el-tabs v-model="currentTagName" type="card" @tab-remove="removeTab" @tab-click="tabClick">
         <el-tab-pane
           v-for="item in visitedViews"
-          :key="item.path"
-          :label="`${item.meta?.title || 'New Tabs'}`"
-          :name="String(item.name)"
+          :key="item.fullPath || item.path"
+          :label="item.meta?.title || 'New Tabs'"
+          :name="item.name"
           :closable="!item.meta?.affix"
         />
       </el-tabs>
@@ -36,29 +36,20 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
-import { useTabsStore } from '@/store/modules/tabs'
-import { useUserStore } from '@/store/modules/user'
+import type { RouteItem } from '/#/menu'
+import { useTabsStore } from '@/store/tabs'
+import { useUserStore } from '@/store/user'
 
 const router = useRouter()
 const route = useRoute()
 const tabsStore = useTabsStore()
 const userStore = useUserStore()
 const currentTagName = ref('')
-const visitedViews = computed<RouteLocationNormalizedLoaded[]>(() => tabsStore.tabList)
+const visitedViews = computed(() => tabsStore.tabList)
 const appMenuList = computed(() => userStore.appMenuList)
 
-watch(
-  () => route.path,
-  () => {
-    tabsStore.addTab(route)
-    currentTagName.value = route.name as string
-  },
-  { immediate: true, deep: true }
-)
-
-const initTabs = (menu: RouteRecordRaw[]) => {
-  menu.forEach((item: RouteRecordRaw) => {
+const initTabs = (menu: RouteItem[]) => {
+  menu.forEach(item => {
     if (item.children) {
       initTabs(item.children)
     } else if (item.meta?.affix) {
@@ -71,14 +62,14 @@ const toLastTab = () => {
   // 如果当前路由不在标签列表里，则重定向到标签里的最后一个
   const i = visitedViews.value.findIndex((e: any) => e.name === route.name)
   if (i === -1) {
-    const item: RouteLocationNormalizedLoaded = visitedViews.value[visitedViews.value.length - 1]
+    const item = visitedViews.value[visitedViews.value.length - 1]
     router.push(item.fullPath)
   }
 }
 
 // 关闭标签
-const removeTab = (name: string) => {
-  tabsStore.removeTab(name)
+const removeTab = (paneName: string | number) => {
+  tabsStore.removeTab(paneName as string)
   toLastTab()
 }
 
@@ -86,10 +77,10 @@ const tabClick = (tag: any) => {
   // console.log('tabClick', tag.paneName)
   const { paneName } = tag
   if (paneName === route.name) return
-  const i = visitedViews.value.findIndex((e: RouteLocationNormalizedLoaded) => e.name === paneName)
+  const i = visitedViews.value.findIndex(e => e.name === paneName)
   if (i > -1) {
-    const item: RouteLocationNormalizedLoaded = visitedViews.value[i]
-    router.push(item.fullPath)
+    const item = visitedViews.value[i]
+    router.push(item.fullPath || item.path)
   }
 }
 
@@ -113,6 +104,14 @@ const handleCommand = (command: string) => {
 
 onMounted(() => {
   initTabs(appMenuList.value)
+  watch(
+    () => route.path,
+    () => {
+      currentTagName.value = route.name as string
+      tabsStore.addTab(route as RouteItem)
+    },
+    { immediate: true, deep: true }
+  )
 })
 </script>
 

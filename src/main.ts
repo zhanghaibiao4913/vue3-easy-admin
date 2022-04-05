@@ -9,7 +9,7 @@ import './assets/styles/index.scss'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { useAppStore } from './store/modules/app'
+import { useAppStore } from './store/app'
 import directive from './directives'
 import SvgIcon from './components/svg-icon/index.vue'
 

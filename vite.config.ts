@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
       PluginVue(),
       VueSetupExtend(),
       AutoImport({
-        dts: 'src/auto-imports.d.ts',
+        dts: 'types/auto-imports.d.ts',
         imports: ['vue'],
         resolvers: [ElementPlusResolver()],
         eslintrc: {
@@ -47,10 +47,10 @@ export default defineConfig(({ mode }) => {
       }),
       Components({
         resolvers: [ElementPlusResolver()],
-        dts: 'src/components.d.ts'
+        dts: 'types/components.d.ts'
       }),
       createSvgIconsPlugin({
-        iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
+        iconDirs: [resolve(root, 'src/assets/svg')],
         symbolId: 'icon-[dir]-[name]'
       }),
       VitePluginCompression({

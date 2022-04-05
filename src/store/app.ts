@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useTabsStore } from './tabs'
 
 export const useAppStore = defineStore({
   id: 'app',
@@ -18,20 +19,11 @@ export const useAppStore = defineStore({
     }
   },
 
-  // 持久化
   persist: {
     enabled: true,
     strategies: [
       {
-        storage: localStorage,
-        paths: [
-          'isShowTabs',
-          'menuWidth',
-          'uiSize',
-          'uniqueOpened',
-          'enableKeepAlive',
-          'enablePermission'
-        ]
+        storage: localStorage
       }
     ]
   },
@@ -39,6 +31,10 @@ export const useAppStore = defineStore({
   actions: {
     toggleTabsShow() {
       this.isShowTabs = !this.isShowTabs
+      if (!this.isShowTabs) {
+        const tabsStore = useTabsStore()
+        tabsStore.clearTab()
+      }
     },
 
     updateMenuWidth(width: number) {

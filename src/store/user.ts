@@ -4,17 +4,8 @@ import constantRoutes from '@/router/constant'
 import { cloneDeep } from 'lodash-es'
 import { useTabsStore } from './tabs'
 import { UserInfoModel } from '@/service/model/user'
-
-function filterDynamicRoutes(list: any[], codes: string[]) {
-  for (let i = list.length - 1; i >= 0; i -= 1) {
-    const item = list[i]
-    if (item.children) {
-      filterDynamicRoutes(item.children, codes)
-    } else if (item.meta && !codes.includes(item.meta.code)) {
-      list.splice(i, 1)
-    }
-  }
-}
+import { filterDynamicRoutes } from '@/utils/permission'
+// import { StorageUtils } from '@/utils/storage'
 
 interface UserState {
   token: string
@@ -32,7 +23,7 @@ export const useUserStore = defineStore({
       userInfo: null,
       // 权限编码
       permissionCodes: [],
-      // 根据权限编码过滤出来的权限路由
+      // 权限路由
       permissionRoutes: []
     }
   },
@@ -42,11 +33,7 @@ export const useUserStore = defineStore({
     strategies: [
       {
         storage: localStorage,
-        paths: ['userInfo', 'permissionCodes']
-      },
-      {
-        storage: sessionStorage,
-        paths: ['token']
+        paths: ['userInfo', 'token']
       }
     ]
   },
@@ -58,34 +45,38 @@ export const useUserStore = defineStore({
   },
 
   actions: {
-    // 保存token
     setToken(token: string) {
       this.token = token
+      // StorageUtils.setToken(token)
     },
 
-    // 保存用户信息
     setUserInfo(userInfo: UserInfoModel | null) {
       this.userInfo = userInfo
+      // StorageUtils.setItem('userInfo', userInfo, localStorage)
     },
 
-    setPermissionCode(codes: string[]) {
+    setPermissionCodes(codes: string[]) {
       this.permissionCodes = codes || []
+      // StorageUtils.setItem('permissionCodes', codes, localStorage)
     },
 
-    // 请求权限
+    setPermissionRoutes(routes: any[]) {
+      this.permissionRoutes = routes || []
+    },
+
     generatePermissionRoutes() {
-      // eslint-disable-next-line prefer-const
-      let result = cloneDeep(dynamicRoutes)
-      filterDynamicRoutes(result, this.permissionCodes)
-      this.permissionRoutes = result || []
-      // console.log('权限路由', this.permissionRoutes)
-      return this.permissionRoutes
+      const data = cloneDeep(dynamicRoutes)
+      const res = filterDynamicRoutes(data, this.permissionCodes)
+      this.setPermissionRoutes(res)
+      return res
     },
 
     // 退出登录
     logout() {
       this.setToken('')
       this.setUserInfo(null)
+      this.setPermissionCodes([])
+      this.setPermissionRoutes([])
       const tabStore = useTabsStore()
       tabStore.clearTab()
       setTimeout(() => {

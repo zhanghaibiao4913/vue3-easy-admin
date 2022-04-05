@@ -7,14 +7,14 @@
 </template>
 
 <script lang="ts" setup>
-import { useTabsStore } from '@/store/modules/tabs'
-import { useAppStore } from '@/store/modules/app'
+import { useTabsStore } from '@/store/tabs'
+import { useAppStore } from '@/store/app'
 
 const tabsStore = useTabsStore()
 const appStore = useAppStore()
 const enableKeepAlive = computed<boolean>(() => appStore.enableKeepAlive)
 const keepAliveList = computed<string[]>(() => {
-  return enableKeepAlive.value ? (tabsStore.keepAliveList as string[]) : []
+  return enableKeepAlive.value ? tabsStore.keepAliveList : []
 })
 </script>
 

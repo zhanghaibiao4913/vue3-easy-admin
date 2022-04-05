@@ -23,7 +23,7 @@ declare module 'vue' {
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    SvgIcon: typeof import('./components/svg-icon/index.vue')['default']
+    SvgIcon: typeof import('./../src/components/svg-icon/index.vue')['default']
   }
 }
 

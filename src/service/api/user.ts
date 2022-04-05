@@ -1,6 +1,6 @@
 import { request } from '../http'
-import { ResponseType } from '../model/response'
-import { UserInfoModel, PermissionCodesModel } from '@/service/model/user'
+import type { ResponseType } from '@/service/model/response'
+import type { UserInfoModel, PermissionCodesModel } from '@/service/model/user'
 
 /**
  * @description: 模拟登录
@@ -24,8 +24,13 @@ export const login = (account: string, passwaord: string) => {
  * @return {*}
  */
 export const getPermissionCodes = () => {
-  return request<ResponseType<PermissionCodesModel>>({
-    url: '/user/permission',
-    method: 'get'
-  })
+  // return request<ResponseType<PermissionCodesModel>>({
+  //   url: '/user/permission',
+  //   method: 'get'
+  // })
+  return {
+    code: 0,
+    message: 'success',
+    data: ['A', 'B', 'C', 'D', 'E']
+  }
 }

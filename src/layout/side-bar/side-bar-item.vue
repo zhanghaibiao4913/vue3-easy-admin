@@ -23,10 +23,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { useRouter } from 'vue-router'
+import type { RouteItem } from '/#/menu'
 
-// eslint-disable-next-line no-undef
 const props = defineProps({
   data: {
     type: Object,
@@ -44,8 +43,8 @@ const router = useRouter()
 
 const childMenuList = computed(() => {
   let result = []
-  if (props.data.children) {
-    result = props.data.children.filter((e: RouteLocationNormalizedLoaded) => !e.meta.hideMenu)
+  if (props.data?.children) {
+    result = props.data.children.filter((e: RouteItem) => !e.meta?.hideMenu)
   }
   return result
 })

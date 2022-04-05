@@ -1,7 +1,6 @@
-/* eslint-disable no-param-reassign */
 import axios, { AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/store/modules/user'
+import { useUserStore } from '@/store/user'
 
 const tokeyKey = import.meta.env.VITE_TOKEN_KEY
 const baseURL = import.meta.env.VITE_BASE_URL

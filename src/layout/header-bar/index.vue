@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <!--  -->
+
   <el-drawer v-model="drawer" :with-header="false" :size="300">
     <div class="h-full flex-col">
       <div class="drawer-header flex-col justify-center">
@@ -37,17 +37,6 @@
           <span>显示标签页</span>
           <el-switch v-model="isShowTabs" inline-prompt active-text="开" inactive-text="关" />
         </div>
-        <!-- <div class="flex items-center justify-between mb20">
-          <span>组件尺寸</span>
-          <el-select v-model="uiSize" style="width: 110px">
-            <el-option
-              v-for="item in uiOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </div> -->
         <div class="flex items-center justify-between mb20">
           <span>菜单宽度</span>
           <el-input-number
@@ -75,12 +64,11 @@
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import { useFullscreen } from '@vueuse/core'
-import { useUserStore } from '@/store/modules/user'
-import { useAppStore } from '@/store/modules/app'
-import { useTabsStore } from '@/store/modules/tabs'
+import { useUserStore } from '@/store/user'
+import { useAppStore } from '@/store/app'
+import { useTabsStore } from '@/store/tabs'
 import logo from '@/assets/image/logo.png'
 
-// const instance = getCurrentInstance()
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
@@ -105,27 +93,6 @@ const menuWidth = computed({
     appStore.updateMenuWidth(newValue)
   }
 })
-// const reloadApp = inject<Function>('reload')
-// const uiSize = computed({
-//   get: () => {
-//     return appStore.uiSize
-//   },
-//   set: newValue => {
-//     instance?.proxy.$ELEMENT.size = newValue
-//     appStore.updateUiSize(newValue)
-//     setTimeout(() => {
-//       if (reloadApp) {
-//         reloadApp()
-//       }
-//     }, 100)
-//   }
-// })
-// const uiOptions = ref([
-//   { label: '大（large）', value: 'large' },
-//   { label: '中（medium）', value: 'medium' },
-//   { label: '小（small）', value: 'small' },
-//   { label: '极小（mini）', value: 'mini' }
-// ])
 const uniqueOpened = computed({
   get: () => {
     return appStore.uniqueOpened
@@ -155,9 +122,9 @@ const onLogout = () => {
 }
 // 刷新当前路由页面
 const handleRefresh = () => {
-  tabsStore.deleteKeepAlive(route.name as string)
+  tabsStore.removeKeepAlive(route.name as string)
   router.replace({
-    path: '/redirect',
+    path: '/redirect-to',
     query: {
       ...route.query,
       redirectPath: route.path

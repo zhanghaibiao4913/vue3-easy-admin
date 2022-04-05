@@ -1,6 +1,6 @@
 {
-  "name": "vite-vue3-admin",
-  "version": "0.0.0",
+  "name": "vue3-easy-admin",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite --host --mode dev",
     "build:staging": "vite build --mode staging",
@@ -14,6 +14,7 @@
     "@vueuse/core": "^7.5.2",
     "axios": "^0.24.0",
     "element-plus": "^2.1.2",
+    "js-cookie": "^3.0.1",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.12",
@@ -51,6 +52,7 @@
     "vite-plugin-style-import": "^1.4.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-setup-extend": "^0.3.0",
+    "vue-eslint-parser": "^8.3.0",
     "vue-tsc": "0.33.1"
   },
   "lint-staged": {

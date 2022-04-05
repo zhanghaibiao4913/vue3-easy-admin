@@ -20,15 +20,16 @@
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { useUserStore } from '@/store/modules/user'
-import { useAppStore } from '@/store/modules/app'
+import { useUserStore } from '@/store/user'
+import { useAppStore } from '@/store/app'
 import SideBarItem from './side-bar-item.vue'
 
 const route = useRoute()
 const userStore = useUserStore()
 const appStore = useAppStore()
-const appMenuList = computed(() => userStore.appMenuList)
+
 const currentPath = computed(() => route.path)
+const appMenuList = computed(() => userStore.appMenuList)
 const menuWidth = computed(() => appStore.menuWidth)
 const uniqueOpened = computed(() => appStore.uniqueOpened)
 const viewStyle = computed(

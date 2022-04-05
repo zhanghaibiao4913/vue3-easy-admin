@@ -19,34 +19,13 @@ export default [
         }
       },
       {
-        name: 'GoodsBrand',
-        path: '/brand',
-        redirect: {
-          name: 'BrandList'
-        },
+        name: 'GoodsCategory',
+        path: '/goods-category',
+        component: () => import('@/views/demo/goods-category/index.vue'),
         meta: {
-          title: '品牌管理'
-        },
-        children: [
-          {
-            name: 'BrandList',
-            path: '/brand-list',
-            component: () => import('@/views/demo/brand-list/index.vue'),
-            meta: {
-              title: '品牌列表',
-              code: 'B'
-            }
-          },
-          {
-            name: 'BrandOperation',
-            path: '/brand-operation',
-            component: () => import('@/views/demo/brand-operation/index.vue'),
-            meta: {
-              title: '品牌运营',
-              code: 'C'
-            }
-          }
-        ]
+          title: '商品分类',
+          code: 'B'
+        }
       }
     ]
   },
@@ -66,7 +45,7 @@ export default [
         component: () => import('@/views/demo/sale-order-list/index.vue'),
         meta: {
           title: '销售订单',
-          code: 'D'
+          code: 'C'
         }
       },
       {
@@ -75,8 +54,38 @@ export default [
         component: () => import('@/views/demo/purchase-order-list/index.vue'),
         meta: {
           title: '采购订单',
-          code: 'E'
+          code: 'D'
         }
+      },
+      {
+        name: '2',
+        path: '/2',
+        redirect: {
+          name: '31'
+        },
+        meta: {
+          title: '二级菜单'
+        },
+        children: [
+          {
+            name: '31',
+            path: '/3-1',
+            component: () => import('@/views/demo/3-1/index.vue'),
+            meta: {
+              title: '三级菜单一',
+              code: 'E'
+            }
+          },
+          {
+            name: '32',
+            path: '/3-2',
+            component: () => import('@/views/demo/3-2/index.vue'),
+            meta: {
+              title: '三级菜单二',
+              code: 'E'
+            }
+          }
+        ]
       }
     ]
   }

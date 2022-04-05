@@ -1,11 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { useUserStore } from '@/store/modules/user'
-import { flatRoutes } from '@/utils'
+import { useUserStore } from '@/store/user'
+import { flatRoutes } from '@/utils/permission'
 import { cloneDeep } from 'lodash-es'
-import constantRoutes from './constant'
-import Layout from '@/views/layout/index.vue'
+import constantRoutes, { notFoundRoute } from './constant'
+import Layout from '@/layout/index.vue'
+import { getPermissionCodes } from '@/service/api/user'
+import { ElMessage } from 'element-plus'
 
 NProgress.configure({
   easing: 'ease',
@@ -27,22 +29,30 @@ router.beforeEach(async to => {
     if (to.name === 'Login') {
       return { name: 'Home' }
     }
-    if (userStore.permissionRoutes.length === 0) {
-      userStore.generatePermissionRoutes()
-      // console.log('permissionRoutes===', userStore.permissionRoutes)
-      const finalRoutes = flatRoutes(cloneDeep(userStore.permissionRoutes))
-      // console.log('finalRoutes===', finalRoutes)
-      router.addRoute({
-        path: '/layout',
-        name: 'Layout',
-        component: Layout,
-        children: finalRoutes
-      })
-      return to.fullPath
+    if (userStore.permissionCodes.length === 0) {
+      const { data: permissionCodes } = await getPermissionCodes()
+      if (permissionCodes.length) {
+        userStore.setPermissionCodes(permissionCodes)
+        const permissionRoutes = userStore.generatePermissionRoutes()
+        const finalRoutes = flatRoutes(cloneDeep(permissionRoutes))
+        // console.log('permissionRoutes===', permissionRoutes)
+        // console.log('finalRoutes===', finalRoutes)
+        router.addRoute({
+          path: '/layout',
+          name: 'Layout',
+          component: Layout,
+          children: finalRoutes
+        })
+        router.addRoute(notFoundRoute)
+        return to.fullPath
+      } else {
+        ElMessage.error('系统权限不足，请联系管理员授权后重新登录')
+        userStore.logout()
+      }
     }
     return true
   } else {
-    if (to.meta.auth === undefined || to.meta.auth === true) {
+    if (to.meta?.auth !== false) {
       return { name: 'Login' }
     }
     return true
@@ -51,11 +61,14 @@ router.beforeEach(async to => {
 
 router.afterEach(to => {
   NProgress.done()
-  // console.log(to)
   // 设置页面标题
   const appTitle = import.meta.env.VITE_APP_TITLE
   const title = to.meta?.title ? `${to.meta.title}-${appTitle}` : appTitle
   document.title = title
+})
+
+router.onError(() => {
+  NProgress.done()
 })
 
 export default router

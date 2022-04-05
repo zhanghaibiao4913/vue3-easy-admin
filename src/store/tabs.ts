@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia'
-import type { RouteLocationNormalized, RouteRecordRaw, RouteRecordName } from 'vue-router'
-import { cloneDeep } from 'lodash-es'
+import type { RouteMeta } from 'vue-router'
 
+interface TabItem {
+  name: string
+  path: string
+  fullPath: string
+  meta: RouteMeta
+}
 interface TabsState {
-  tabList: RouteLocationNormalized[]
+  tabList: TabItem[]
   keepAliveList: string[]
 }
 
@@ -17,37 +22,34 @@ export const useTabsStore = defineStore({
     }
   },
 
-  // 持久化
   persist: {
     enabled: true
   },
 
   actions: {
-    addTab(route: RouteLocationNormalized | RouteRecordRaw) {
+    addTab(route: TabItem) {
       if (route.meta?.hideMenu) return
       const i = this.tabList.findIndex(v => v.name === route.name)
-      // 不存在时进行新增操作
       if (i === -1) {
-        const copyRoute = cloneDeep(route as RouteLocationNormalized)
         this.tabList.push({
-          name: copyRoute.name,
-          path: copyRoute.path,
-          fullPath: copyRoute.fullPath,
-          meta: copyRoute.meta
-        } as RouteLocationNormalized)
+          name: route.name,
+          path: route.path,
+          fullPath: route.fullPath,
+          meta: route.meta
+        })
         this.updateKeepAlive()
       }
     },
 
-    removeTab(name: RouteRecordName) {
+    removeTab(name: string) {
       const i = this.tabList.findIndex(e => e.name === name)
       if (i > -1) {
         this.tabList.splice(i, 1)
+        this.updateKeepAlive()
       }
-      this.updateKeepAlive()
     },
 
-    removeOtherTab(activeName: RouteRecordName) {
+    removeOtherTab(activeName: string) {
       this.tabList = this.tabList.filter(item => item.meta?.affix || item.name === activeName)
       this.updateKeepAlive()
     },
@@ -57,7 +59,7 @@ export const useTabsStore = defineStore({
       this.updateKeepAlive()
     },
 
-    removeLeftRight(direction: string, name: RouteRecordName) {
+    removeLeftRight(direction: string, name: string) {
       const index = this.tabList.findIndex(e => e.name === name)
       if (index !== -1) {
         if (direction === 'left') {
@@ -69,8 +71,8 @@ export const useTabsStore = defineStore({
             return item.meta?.affix || i <= index
           })
         }
+        this.updateKeepAlive()
       }
-      this.updateKeepAlive()
     },
 
     clearTab() {
@@ -79,18 +81,17 @@ export const useTabsStore = defineStore({
     },
 
     updateKeepAlive() {
-      // eslint-disable-next-line consistent-return
-      const arr = this.tabList.map(e => {
-        if (e.meta?.keepAlive !== false) {
-          return e.name
-        }
-      }) as string[]
-      this.keepAliveList = arr || []
+      const arr = this.tabList.filter(e => {
+        return e.meta?.keepAlive !== false
+      })
+      this.keepAliveList = arr.map(e => e.name)
     },
 
-    deleteKeepAlive(name: RouteRecordName) {
+    removeKeepAlive(name: string) {
       const index = this.keepAliveList.findIndex(e => e === name)
-      this.keepAliveList.splice(index, 1)
+      if (index >= 0) {
+        this.keepAliveList.splice(index, 1)
+      }
     }
   }
 })
