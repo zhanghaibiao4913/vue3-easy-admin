@@ -2,10 +2,10 @@
   "name": "vue3-easy-admin",
   "version": "0.0.2",
   "scripts": {
-    "dev": "vite --host --mode dev",
-    "build:staging": "vite build --mode staging",
+    "dev": "vite --host",
     "build": "vite build",
-    "serve": "vite preview",
+    "build:staging": "vite build --mode staging",
+    "preview": "vite preview",
     "prepare": "husky install",
     "lint": "eslint --fix ./src --ext .js,.vue,.ts"
   },

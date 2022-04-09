@@ -10,12 +10,13 @@ import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
   const appTitle = env.VITE_APP_TITLE
+  const isBuild = command === 'build'
   return {
-    base: process.env.NODE_ENV === 'production' ? './' : '/',
+    base: isBuild ? './' : '/',
     server: {
       port: 9011, // 本地开发端口
       open: false, // 启动时是否自动打开浏览器
@@ -26,10 +27,6 @@ export default defineConfig(({ mode }) => {
         '@': resolve(__dirname, 'src'),
         '/#/': resolve(__dirname, 'types')
       }
-    },
-    build: {
-      sourcemap: false,
-      minify: 'esbuild'
     },
     esbuild: {
       pure: ['console.log', 'debugger']
