@@ -80,30 +80,28 @@ npm run serve
 .env文件所有环境下都会加载，可以在里面添加一些无需区分环境的配置项。
 ```javascript
 // .env
-VITE_TOKEN_KEY="authorization"
+VITE_TOKEN_KEY=authorization
 ```
 
 ```javascript
 // 获取配置的常量
 const tokenKey = import.meta.env.VITE_TOKEN_KEY
 ```
-
 #### 本地开发配置文件
 ```javascript
-// .env.dev
-VITE_BASE_URL="http://localhost:8088"
+// .env.development
+VITE_BASE_URL=http://localhost:8088
 ```
-
 #### 测试环境配置文件
 ```javascript
 // .env.staging
-VITE_BASE_URL="http://test.com:8088"
+VITE_BASE_URL=http://test.com
 ```
 
 #### 生产环境配置文件
 ```javascript
 // .env.production
-VITE_BASE_URL="http://prop.com"
+VITE_BASE_URL=http://prop.com
 ```
 
 ### 路由
