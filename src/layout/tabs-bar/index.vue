@@ -63,7 +63,7 @@ const toLastTab = () => {
   const i = visitedViews.value.findIndex((e: any) => e.name === route.name)
   if (i === -1) {
     const item = visitedViews.value[visitedViews.value.length - 1]
-    router.push(item.fullPath)
+    router.push(item.fullPath || item.path)
   }
 }
 
